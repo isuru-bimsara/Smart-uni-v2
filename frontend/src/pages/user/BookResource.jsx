@@ -1,309 +1,7 @@
-// // // // import { useState } from 'react';
-// // // // import { useParams, useNavigate } from 'react-router-dom';
-// // // // import axios from 'axios';
-
-// // // // export default function BookResource() {
-// // // //   const { id } = useParams();
-// // // //   const navigate = useNavigate();
-
-// // // //   const [form, setForm] = useState({
-// // // //     startTime: '',
-// // // //     endTime: '',
-// // // //     purpose: ''
-// // // //   });
-
-// // // //   const handleChange = e =>
-// // // //     setForm({ ...form, [e.target.name]: e.target.value });
-
-// // // //   const handleSubmit = async e => {
-// // // //     e.preventDefault();
-
-// // // //     try {
-// // // //       await axios.post('/api/bookings', {
-// // // //         resourceId: id,
-// // // //         ...form
-// // // //       });
-
-// // // //       alert("Booking Successful ✅");
-// // // //       navigate('/user/bookings');
-
-// // // //     } catch (err) {
-// // // //       alert("Error: " + err.response?.data?.message);
-// // // //     }
-// // // //   };
-
-// // // //   return (
-// // // //     <div className="p-6 max-w-md mx-auto bg-white shadow rounded">
-// // // //       <h1 className="text-xl font-bold mb-4">Book Resource</h1>
-
-// // // //       <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-
-// // // //         <input
-// // // //           type="datetime-local"
-// // // //           name="startTime"
-// // // //           onChange={handleChange}
-// // // //           required
-// // // //           className="border p-2 rounded"
-// // // //         />
-
-// // // //         <input
-// // // //           type="datetime-local"
-// // // //           name="endTime"
-// // // //           onChange={handleChange}
-// // // //           required
-// // // //           className="border p-2 rounded"
-// // // //         />
-
-// // // //         <input
-// // // //           type="text"
-// // // //           name="purpose"
-// // // //           placeholder="Purpose"
-// // // //           onChange={handleChange}
-// // // //           className="border p-2 rounded"
-// // // //         />
-
-// // // //         <button className="bg-green-500 text-white p-2 rounded">
-// // // //           Confirm Booking
-// // // //         </button>
-
-// // // //       </form>
-// // // //     </div>
-// // // //   );
-// // // // }
-
-// // // import { useState } from 'react';
-// // // import { useParams, useNavigate } from 'react-router-dom';
-// // // import axios from 'axios';
-// // // import { Calendar, Clock, BookOpen, CheckCircle } from 'lucide-react'; // Optional: npm install lucide-react
-
-// // // export default function BookResource() {
-// // //   const { id } = useParams();
-// // //   const navigate = useNavigate();
-// // //   const [loading, setLoading] = useState(false);
-
-// // //   const [form, setForm] = useState({
-// // //     startTime: '',
-// // //     endTime: '',
-// // //     purpose: ''
-// // //   });
-
-// // //   const handleChange = e =>
-// // //     setForm({ ...form, [e.target.name]: e.target.value });
-
-// // //   const handleSubmit = async e => {
-// // //     e.preventDefault();
-// // //     setLoading(true);
-
-// // //     try {
-// // //       await axios.post('/api/bookings', {
-// // //         resourceId: id,
-// // //         ...form
-// // //       });
-// // //       alert("Booking Successful ✅");
-// // //       navigate('/user/bookings');
-// // //     } catch (err) {
-// // //       alert("Error: " + (err.response?.data?.message || "Something went wrong"));
-// // //     } finally {
-// // //       setLoading(false);
-// // //     }
-// // //   };
-
-// // //   return (
-// // //     <div className="min-h-screen bg-gray-50 py-12 px-4">
-// // //       <div className="max-w-md mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100">
-        
-// // //         {/* Header Section */}
-// // //         <div className="bg-indigo-600 p-6 text-white">
-// // //           <div className="flex items-center gap-3">
-// // //             <Calendar className="w-8 h-8" />
-// // //             <div>
-// // //               <h1 className="text-2xl font-bold">Reserve Resource</h1>
-// // //               <p className="text-indigo-100 text-sm">Fill in the details to secure your slot</p>
-// // //             </div>
-// // //           </div>
-// // //         </div>
-
-// // //         {/* Form Section */}
-// // //         <form onSubmit={handleSubmit} className="p-8 space-y-6">
-          
-// // //           {/* Start Time */}
-// // //           <div>
-// // //             <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-// // //               <Clock className="w-4 h-4 text-indigo-500" />
-// // //               Start Date & Time
-// // //             </label>
-// // //             <input
-// // //               type="datetime-local"
-// // //               name="startTime"
-// // //               onChange={handleChange}
-// // //               required
-// // //               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all bg-gray-50"
-// // //             />
-// // //           </div>
-
-// // //           {/* End Time */}
-// // //           <div>
-// // //             <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-// // //               <Clock className="w-4 h-4 text-rose-500" />
-// // //               End Date & Time
-// // //             </label>
-// // //             <input
-// // //               type="datetime-local"
-// // //               name="endTime"
-// // //               onChange={handleChange}
-// // //               required
-// // //               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all bg-gray-50"
-// // //             />
-// // //           </div>
-
-// // //           {/* Purpose */}
-// // //           <div>
-// // //             <label className="flex items-center gap-2 text-sm font-semibold text-gray-700 mb-2">
-// // //               <BookOpen className="w-4 h-4 text-indigo-500" />
-// // //               Purpose of Use
-// // //             </label>
-// // //             <textarea
-// // //               name="purpose"
-// // //               placeholder="e.g. Project Meeting, Individual Study..."
-// // //               rows="3"
-// // //               onChange={handleChange}
-// // //               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all bg-gray-50 resize-none"
-// // //             />
-// // //           </div>
-
-// // //           {/* Submit Button */}
-// // //           <button
-// // //             type="submit"
-// // //             disabled={loading}
-// // //             className={`w-full flex items-center justify-center gap-2 py-4 rounded-xl text-white font-bold text-lg transition-all shadow-lg active:scale-[0.98] ${
-// // //               loading 
-// // //                 ? 'bg-gray-400 cursor-not-allowed' 
-// // //                 : 'bg-indigo-600 hover:bg-indigo-700 hover:shadow-indigo-200'
-// // //             }`}
-// // //           >
-// // //             {loading ? (
-// // //               "Processing..."
-// // //             ) : (
-// // //               <>
-// // //                 <CheckCircle className="w-5 h-5" />
-// // //                 Confirm Booking
-// // //               </>
-// // //             )}
-// // //           </button>
-
-// // //           <p className="text-center text-xs text-gray-400">
-// // //             By clicking confirm, you agree to our resource usage policy.
-// // //           </p>
-// // //         </form>
-// // //       </div>
-// // //     </div>
-// // //   );
-// // // }
-
-// // // frontend/src/pages/user/BookResource.jsx
-// // import { useState } from 'react';
-// // import { useParams, useNavigate } from 'react-router-dom';
-// // import axios from 'axios';
-
-// // export default function BookResource() {
-// //   const { id } = useParams(); // resource ID from URL
-// //   const navigate = useNavigate();
-// //   const [loading, setLoading] = useState(false);
-
-// //   const [form, setForm] = useState({
-// //     startTime: '',
-// //     endTime: '',
-// //     purpose: ''
-// //   });
-
-// //   const handleChange = e => {
-// //     setForm({ ...form, [e.target.name]: e.target.value });
-// //   };
-
-// //   const handleSubmit = async e => {
-// //     e.preventDefault();
-
-// //     if (!form.startTime || !form.endTime || !form.purpose) {
-// //       alert("Please fill all fields");
-// //       return;
-// //     }
-
-// //     if (new Date(form.endTime) <= new Date(form.startTime)) {
-// //       alert("End time must be after start time");
-// //       return;
-// //     }
-
-// //     setLoading(true);
-
-// //     try {
-// //       // Make POST request to backend
-// //       await axios.post(`http://localhost:8083/api/bookings`, {
-// //         resourceId: id,
-// //         ...form
-// //       });
-
-// //       alert("Booking Successful ✅");
-// //       navigate('/user/bookings');
-// //     } catch (err) {
-// //       console.error(err);
-// //       alert("Error: " + (err.response?.data?.message || "Something went wrong"));
-// //     } finally {
-// //       setLoading(false);
-// //     }
-// //   };
-
-// //   return (
-// //     <div style={{ padding: '2rem' }}>
-// //       <h1>Reserve Resource</h1>
-// //       <form onSubmit={handleSubmit} style={{ maxWidth: '400px' }}>
-// //         <div style={{ marginBottom: '1rem' }}>
-// //           <label>Start Date & Time</label>
-// //           <input
-// //             type="datetime-local"
-// //             name="startTime"
-// //             value={form.startTime}
-// //             onChange={handleChange}
-// //             required
-// //             style={{ width: '100%', padding: '0.5rem' }}
-// //           />
-// //         </div>
-
-// //         <div style={{ marginBottom: '1rem' }}>
-// //           <label>End Date & Time</label>
-// //           <input
-// //             type="datetime-local"
-// //             name="endTime"
-// //             value={form.endTime}
-// //             onChange={handleChange}
-// //             required
-// //             style={{ width: '100%', padding: '0.5rem' }}
-// //           />
-// //         </div>
-
-// //         <div style={{ marginBottom: '1rem' }}>
-// //           <label>Purpose</label>
-// //           <textarea
-// //             name="purpose"
-// //             value={form.purpose}
-// //             onChange={handleChange}
-// //             rows="3"
-// //             placeholder="e.g. Project Meeting, Study"
-// //             style={{ width: '100%', padding: '0.5rem' }}
-// //           />
-// //         </div>
-
-// //         <button type="submit" disabled={loading} style={{ padding: '0.5rem 1rem' }}>
-// //           {loading ? "Processing..." : "Confirm Booking"}
-// //         </button>
-// //       </form>
-// //     </div>
-// //   );
-// // }
-
-// import { useState, useEffect } from 'react';
-// import { useParams, useNavigate } from 'react-router-dom';
-// import axios from 'axios';
-// import DatePicker from 'react-datepicker';
+// import { useState, useEffect } from "react";
+// import { useParams, useNavigate } from "react-router-dom";
+// import axios from "axios";
+// import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 
 // export default function BookResource() {
@@ -312,29 +10,50 @@
 
 //   const [loading, setLoading] = useState(false);
 //   const [bookings, setBookings] = useState([]);
-
 //   const [startTime, setStartTime] = useState(null);
 //   const [endTime, setEndTime] = useState(null);
-//   const [purpose, setPurpose] = useState('');
+//   const [purpose, setPurpose] = useState("");
 
-//   // ✅ Load bookings
 //   useEffect(() => {
-//     axios
-//       .get(`http://localhost:8083/api/bookings/resource/${id}`)
-//       .then(res => setBookings(res.data.data))
-//       .catch(err => console.error(err));
+//     const fetchBookings = async () => {
+//       try {
+//         const res = await axios.get(
+//           `http://localhost:8083/api/bookings/resource/${id}`
+//         );
+//         setBookings(res.data.data || []);
+//       } catch (err) {
+//         console.error(err);
+//       }
+//     };
+//     fetchBookings();
 //   }, [id]);
 
-//   // ✅ Convert booked times to disabled intervals
-//   const excludeIntervals = bookings.map(b => ({
+//   // Convert bookings to intervals for conflict checking
+//   const intervals = bookings.map((b) => ({
 //     start: new Date(b.startTime),
-//     end: new Date(b.endTime)
+//     end: new Date(b.endTime),
 //   }));
 
-//   // ✅ Check conflict
 //   const isConflict = (start, end) => {
-//     return excludeIntervals.some(interval =>
-//       start < interval.end && end > interval.start
+//     return intervals.some((i) => start < i.end && end > i.start);
+//   };
+
+//   // Format date for backend: yyyy-MM-ddTHH:mm:ss
+//   const formatDateForBackend = (date) => {
+//     if (!date) return null;
+//     const pad = (n) => (n < 10 ? "0" + n : n);
+//     return (
+//       date.getFullYear() +
+//       "-" +
+//       pad(date.getMonth() + 1) +
+//       "-" +
+//       pad(date.getDate()) +
+//       "T" +
+//       pad(date.getHours()) +
+//       ":" +
+//       pad(date.getMinutes()) +
+//       ":" +
+//       pad(date.getSeconds())
 //     );
 //   };
 
@@ -342,12 +61,12 @@
 //     e.preventDefault();
 
 //     if (!startTime || !endTime || !purpose) {
-//       alert("Fill all fields");
+//       alert("❌ Please fill all fields");
 //       return;
 //     }
 
 //     if (endTime <= startTime) {
-//       alert("End time must be after start");
+//       alert("❌ End time must be after start time");
 //       return;
 //     }
 
@@ -358,29 +77,30 @@
 
 //     try {
 //       setLoading(true);
-
 //       const token = localStorage.getItem("token");
+//       if (!token) {
+//         alert("❌ You must be logged in");
+//         return;
+//       }
 
 //       await axios.post(
 //         "http://localhost:8083/api/bookings",
 //         {
 //           resourceId: Number(id),
-//           startTime: startTime.toISOString().slice(0, 19),
-//           endTime: endTime.toISOString().slice(0, 19),
-//           purpose
+//           startTime: formatDateForBackend(startTime),
+//           endTime: formatDateForBackend(endTime),
+//           purpose,
 //         },
 //         {
-//           headers: {
-//             Authorization: `Bearer ${token}`
-//           }
+//           headers: { Authorization: `Bearer ${token}` },
 //         }
 //       );
 
 //       alert("✅ Booking Successful!");
 //       navigate("/user/bookings");
-
 //     } catch (err) {
-//       alert("❌ " + (err.response?.data?.message || "Error"));
+//       console.error(err.response?.data || err.message);
+//       alert("❌ " + (err.response?.data?.message || err.message || "Error"));
 //     } finally {
 //       setLoading(false);
 //     }
@@ -390,23 +110,19 @@
 //     <div style={{ padding: "2rem" }}>
 //       <h2>📅 Book Resource</h2>
 
-//       {/* ✅ Show booked slots */}
-//       <div style={{ background: "#eee", padding: "10px", marginBottom: "20px" }}>
+//       <div style={{ background: "#ffe6e6", padding: "10px", marginBottom: "20px" }}>
 //         <h4>🚫 Booked Time Slots</h4>
-//         {bookings.length === 0 ? (
-//           <p>No bookings</p>
-//         ) : (
-//           bookings.map((b, i) => (
-//             <p key={i}>
-//               {new Date(b.startTime).toLocaleString()} →{" "}
-//               {new Date(b.endTime).toLocaleString()}
-//             </p>
-//           ))
-//         )}
+//         {bookings.length === 0
+//           ? "No bookings"
+//           : bookings.map((b, i) => (
+//               <p key={i}>
+//                 🟥 {new Date(b.startTime).toLocaleString()} →{" "}
+//                 {new Date(b.endTime).toLocaleString()}
+//               </p>
+//             ))}
 //       </div>
 
 //       <form onSubmit={handleSubmit}>
-
 //         <div style={{ marginBottom: "1rem" }}>
 //           <label>Start Time</label>
 //           <DatePicker
@@ -416,7 +132,6 @@
 //             timeIntervals={30}
 //             dateFormat="yyyy-MM-dd HH:mm"
 //             minDate={new Date()}
-//             excludeDateIntervals={excludeIntervals} // 🔥 BLOCK
 //             placeholderText="Select start time"
 //           />
 //         </div>
@@ -430,7 +145,6 @@
 //             timeIntervals={30}
 //             dateFormat="yyyy-MM-dd HH:mm"
 //             minDate={startTime || new Date()}
-//             excludeDateIntervals={excludeIntervals} // 🔥 BLOCK
 //             placeholderText="Select end time"
 //           />
 //         </div>
@@ -440,209 +154,171 @@
 //           <textarea
 //             value={purpose}
 //             onChange={(e) => setPurpose(e.target.value)}
-//             rows="3"
+//             rows={3}
+//             placeholder="Enter purpose"
 //           />
 //         </div>
 
-//         <button disabled={loading}>
+//         <button type="submit" disabled={loading}>
 //           {loading ? "Booking..." : "Confirm Booking"}
 //         </button>
-
 //       </form>
 //     </div>
 //   );
 // }
 
-import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import DatePicker from 'react-datepicker';
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import axios from "axios";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function BookResource() {
-  const { id } = useParams();
+  const { id } = useParams(); // resource id
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [bookings, setBookings] = useState([]);
-
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
-  const [purpose, setPurpose] = useState('');
+  const [purpose, setPurpose] = useState("");
 
-  // ✅ Load bookings
+  // Fetch bookings for this resource
   useEffect(() => {
-    axios
-      .get(`http://localhost:8083/api/bookings/resource/${id}`)
-      .then(res => setBookings(res.data.data))
-      .catch(err => console.error(err));
+    const fetchBookings = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8083/api/bookings/resource/${id}`);
+        if (res.data.data) {
+          // Parse API strings into Date objects
+          const parsed = res.data.data.map(b => ({
+            ...b,
+            startTime: new Date(b.startTime),
+            endTime: new Date(b.endTime),
+          }));
+          setBookings(parsed);
+        } else {
+          setBookings([]);
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchBookings();
   }, [id]);
 
-  // ✅ Convert bookings
-  const intervals = bookings.map(b => ({
-    start: new Date(b.startTime),
-    end: new Date(b.endTime)
-  }));
+  // Convert bookings into intervals for conflict check
+  const intervals = bookings.map(b => ({ start: b.startTime, end: b.endTime }));
 
-  // ✅ Get all booked TIMES (disable hours)
-  const getDisabledTimes = (date) => {
-    let disabled = [];
+  // Check if selected times conflict
+  const isConflict = (start, end) => intervals.some(i => start < i.end && end > i.start);
 
+  // Get booked hours for a given date
+  const getDisabledHours = (date) => {
+    const disabled = [];
     intervals.forEach(interval => {
-      if (
-        date &&
-        interval.start.toDateString() === date.toDateString()
-      ) {
-        let startHour = interval.start.getHours();
-        let endHour = interval.end.getHours();
-
-        for (let h = startHour; h <= endHour; h++) {
+      if (date && interval.start.toDateString() === date.toDateString()) {
+        for (let h = interval.start.getHours(); h < interval.end.getHours(); h++) {
           disabled.push(h);
         }
       }
     });
-
     return disabled;
   };
 
-  // ✅ Check conflict
-  const isConflict = (start, end) => {
-    return intervals.some(i =>
-      start < i.end && end > i.start
-    );
-  };
-
-  // ✅ Highlight booked days in calendar
+  // Highlight booked dates in calendar
   const highlightDates = intervals.map(i => i.start);
 
+  // Submit booking
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (!startTime || !endTime || !purpose) {
-      alert("Fill all fields");
-      return;
-    }
-
-    if (endTime <= startTime) {
-      alert("End time must be after start");
-      return;
-    }
-
-    if (isConflict(startTime, endTime)) {
-      alert("❌ This time is already booked!");
-      return;
-    }
+    if (!startTime || !endTime || !purpose) return alert("❌ Please fill all fields");
+    if (endTime <= startTime) return alert("❌ End time must be after start");
+    if (isConflict(startTime, endTime)) return alert("❌ This time is already booked!");
 
     try {
       setLoading(true);
-
       const token = localStorage.getItem("token");
-
       await axios.post(
         "http://localhost:8083/api/bookings",
-        {
-          resourceId: Number(id),
-          startTime: startTime.toISOString().slice(0, 19),
-          endTime: endTime.toISOString().slice(0, 19),
-          purpose
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        }
+        { resourceId: Number(id), startTime, endTime, purpose },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-
       alert("✅ Booking Successful!");
       navigate("/user/bookings");
-
     } catch (err) {
-      alert("❌ " + (err.response?.data?.message || "Error"));
+      console.error(err);
+      alert("❌ " + (err.response?.data?.message || err.message));
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>📅 Book Resource</h2>
+    <div style={{ padding: "2rem", maxWidth: "600px", margin: "0 auto" }}>
+      <h2 className="text-2xl font-bold mb-4">📅 Book Resource</h2>
 
-      {/* ✅ SHOW BOOKED TIMES */}
-      <div style={{
-        background: "#ffe6e6",
-        padding: "10px",
-        marginBottom: "20px",
-        border: "1px solid red"
-      }}>
+      {/* Booked Time Slots */}
+      <div style={{ background: "#ffe6e6", padding: "10px", marginBottom: "20px" }}>
         <h4>🚫 Booked Time Slots</h4>
         {bookings.length === 0 ? (
           <p>No bookings</p>
         ) : (
           bookings.map((b, i) => (
             <p key={i}>
-              🟥 {new Date(b.startTime).toLocaleString()} →{" "}
-              {new Date(b.endTime).toLocaleString()}
+              🟥 {b.startTime.toLocaleString()} → {b.endTime.toLocaleString()} ({b.status})
             </p>
           ))
         )}
       </div>
 
+      {/* Booking Form */}
       <form onSubmit={handleSubmit}>
-
-        {/* ✅ START TIME */}
-        <div style={{ marginBottom: "1rem" }}>
-          <label>Start Time</label>
+        <div className="mb-4">
+          <label className="block mb-1">Start Time</label>
           <DatePicker
             selected={startTime}
-            onChange={(date) => setStartTime(date)}
+            onChange={date => setStartTime(date)}
             showTimeSelect
             timeIntervals={30}
             dateFormat="yyyy-MM-dd HH:mm"
             minDate={new Date()}
-            highlightDates={highlightDates} // 🔥 mark booked days
-            filterTime={(time) => {
-              const selectedDate = startTime || new Date();
-              const hour = time.getHours();
-              return !getDisabledTimes(selectedDate).includes(hour);
-            }}
+            highlightDates={highlightDates} // Highlight booked dates
+            filterTime={time => !getDisabledHours(startTime || new Date()).includes(time.getHours())} // Disable booked hours
             placeholderText="Select start time"
+            className="border p-2 w-full"
           />
         </div>
 
-        {/* ✅ END TIME */}
-        <div style={{ marginBottom: "1rem" }}>
-          <label>End Time</label>
+        <div className="mb-4">
+          <label className="block mb-1">End Time</label>
           <DatePicker
             selected={endTime}
-            onChange={(date) => setEndTime(date)}
+            onChange={date => setEndTime(date)}
             showTimeSelect
             timeIntervals={30}
             dateFormat="yyyy-MM-dd HH:mm"
             minDate={startTime || new Date()}
             highlightDates={highlightDates}
-            filterTime={(time) => {
-              const selectedDate = endTime || startTime || new Date();
-              const hour = time.getHours();
-              return !getDisabledTimes(selectedDate).includes(hour);
-            }}
+            filterTime={time => !getDisabledHours(endTime || startTime || new Date()).includes(time.getHours())}
             placeholderText="Select end time"
+            className="border p-2 w-full"
           />
         </div>
 
-        {/* PURPOSE */}
-        <div style={{ marginBottom: "1rem" }}>
-          <label>Purpose</label>
+        <div className="mb-4">
+          <label className="block mb-1">Purpose</label>
           <textarea
             value={purpose}
-            onChange={(e) => setPurpose(e.target.value)}
-            rows="3"
+            onChange={e => setPurpose(e.target.value)}
+            rows={3}
+            className="border p-2 w-full"
+            placeholder="Enter purpose"
           />
         </div>
 
-        <button disabled={loading}>
+        <button type="submit" disabled={loading} className="bg-green-500 text-white px-4 py-2">
           {loading ? "Booking..." : "Confirm Booking"}
         </button>
-
       </form>
     </div>
   );
