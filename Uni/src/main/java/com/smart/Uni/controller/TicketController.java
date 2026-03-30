@@ -5,6 +5,7 @@ import com.smart.Uni.dto.request.TicketRequest;
 import com.smart.Uni.dto.response.ApiResponse;
 import com.smart.Uni.dto.response.CommentResponse;
 import com.smart.Uni.dto.response.TicketResponse;
+import com.smart.Uni.enums.TicketCategory;
 import com.smart.Uni.enums.TicketStatus;
 import com.smart.Uni.service.CommentService;
 import com.smart.Uni.service.TicketService;
@@ -108,4 +109,25 @@ public class TicketController {
         ticketService.deleteTicketByUser(id, userDetails.getUsername());
         return ResponseEntity.ok(ApiResponse.success("Ticket deleted", null));
     }
+
+//    @GetMapping("/assigned")
+//    @PreAuthorize("hasRole('TECHNICIAN')")
+//    public ResponseEntity<ApiResponse<List<TicketResponse>>> getAssignedTickets(
+//            @AuthenticationPrincipal UserDetails userDetails,
+//            @RequestParam(value="category", required = false) TicketCategory category) {
+//        return ResponseEntity.ok(ApiResponse.success(ticketService.getAssignedTickets(userDetails.getUsername(), category)));
+//    }
+
+@GetMapping("/assigned")
+@PreAuthorize("hasRole('TECHNICIAN')")
+public ResponseEntity<ApiResponse<List<TicketResponse>>> getAssignedTickets(
+        @AuthenticationPrincipal UserDetails userDetails,
+        @RequestParam(value="category", required = false) TicketCategory category) {
+
+    return ResponseEntity.ok(
+            ApiResponse.success(
+                    ticketService.getAssignedTickets(userDetails.getUsername(), category)
+            )
+    );
+}
 }

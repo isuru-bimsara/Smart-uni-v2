@@ -1,3 +1,4 @@
+//frontend/src/pages/tech/TechNotifications.jsx
 import { useEffect, useState } from 'react';
 import { notificationsApi } from '../../api/notifications';
 

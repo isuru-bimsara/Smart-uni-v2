@@ -1,29 +1,21 @@
-// import api from './axios'
-
-// export const ticketsApi = {
-//   create: (formData) => api.post('/tickets', formData, {
-//     headers: { 'Content-Type': 'multipart/form-data' }
-//   }),
-//   getAll: () => api.get('/tickets'),
-//   getMyTickets: () => api.get('/tickets/my'),
-//   getById: (id) => api.get(`/tickets/${id}`),
-//   updateStatus: (id, status) => api.patch(`/tickets/${id}/status`, null, { params: { status } }),
-//   assign: (id, technicianId) => api.patch(`/tickets/${id}/assign`, null, { params: { technicianId } }),
-//   getComments: (id) => api.get(`/tickets/${id}/comments`),
-//   addComment: (id, content) => api.post(`/tickets/${id}/comments`, { content }),
-// }
-
-import api from './axios'
+// frontend/src/api/tickets.js
+import api from "./axios";
 
 export const ticketsApi = {
-  create: (formData) => api.post('/tickets', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  }),
-  getAll: () => api.get('/tickets'),
-  getMyTickets: () => api.get('/tickets/my'),
+  create: (formData) =>
+    api.post("/tickets", formData, {
+      headers: { "Content-Type": "multipart/form-data" },
+    }),
+  getAll: () => api.get("/tickets"),
+  getMyTickets: () => api.get("/tickets/my"),
   getById: (id) => api.get(`/tickets/${id}`),
-  updateStatus: (id, status) => api.patch(`/tickets/${id}/status`, null, { params: { status } }),
-  assign: (id, technicianId) => api.patch(`/tickets/${id}/assign`, null, { params: { technicianId } }),
+  updateStatus: (id, status) =>
+    api.patch(`/tickets/${id}/status`, null, { params: { status } }),
+  assign: (id, technicianId) =>
+    api.patch(`/tickets/${id}/assign`, null, { params: { technicianId } }),
   getComments: (id) => api.get(`/tickets/${id}/comments`),
   addComment: (id, content) => api.post(`/tickets/${id}/comments`, { content }),
-}
+  getAssigned: () => api.get("/tickets/assigned"),
+  getAssignedByType: (type) =>
+    api.get("/tickets/assigned", { params: { category: type } }),
+};

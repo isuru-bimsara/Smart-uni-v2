@@ -182,4 +182,36 @@ public class TicketService {
         }
         ticketRepository.deleteById(id);
     }
+
+//    // Add this in TicketService
+//    public List<TicketResponse> getAssignedTickets(String email, TicketCategory category) {
+//        User user = userRepository.findByEmail(email)
+//                .orElseThrow(() -> new ResourceNotFoundException("User not found: " + email));
+//
+//        List<Ticket> tickets;
+//        if (category != null) {
+//            tickets = ticketRepository.findByAssigneeIdAndCategory(user.getId(), category);
+//        } else {
+//            tickets = ticketRepository.findByAssigneeId(user.getId());
+//        }
+//        return tickets.stream().map(this::toResponse).collect(Collectors.toList());
+//    }
+
+    public List<TicketResponse> getAssignedTickets(String email, TicketCategory category) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        List<Ticket> tickets;
+
+        if (category != null) {
+            tickets = ticketRepository.findByAssigneeIdAndCategory(user.getId(), category);
+        } else {
+            tickets = ticketRepository.findByAssigneeId(user.getId());
+        }
+
+        return tickets.stream().map(this::toResponse).collect(Collectors.toList());
+    }
+
+
 }
