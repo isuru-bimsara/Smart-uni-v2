@@ -14,6 +14,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
     List<Ticket> findByStatus(TicketStatus status);
     List<Ticket> findByTitleContainingIgnoreCase(String title);
     List<Ticket> findByCategory(TicketCategory category);
+    long countByCreatedAtBetween(java.time.LocalDateTime start, java.time.LocalDateTime end);
 
     List<Ticket> findByAssigneeIdAndCategory(Long assigneeId, TicketCategory category);
 }
