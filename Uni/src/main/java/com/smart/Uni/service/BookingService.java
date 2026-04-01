@@ -26,6 +26,7 @@ public class BookingService {
     private final BookingRepository bookingRepository;
     private final ResourceRepository resourceRepository;
     private final UserRepository userRepository;
+    private final NotificationService notificationService;
 
     @Transactional
     public BookingResponse createBooking(BookingRequest request, String username) {
@@ -54,8 +55,9 @@ public class BookingService {
                 .build();
 
         Booking saved = bookingRepository.save(booking);
-
+        notificationService.notifyBookingPending(saved);
         return mapToResponse(saved);
+
     }
 
     public List<BookingResponse> getUserBookings(String username) {
@@ -87,7 +89,7 @@ public class BookingService {
 
         booking.setStatus(BookingStatus.APPROVED);
         Booking updated = bookingRepository.save(booking);
-
+        notificationService.notifyBookingApproved(updated);
         return mapToResponse(updated);
     }
 
@@ -99,7 +101,7 @@ public class BookingService {
 
         booking.setStatus(BookingStatus.REJECTED);
         Booking updated = bookingRepository.save(booking);
-
+        notificationService.notifyBookingRejected(updated);
         return mapToResponse(updated);
     }
 
@@ -126,7 +128,7 @@ public class BookingService {
 
         booking.setStatus(BookingStatus.CANCELLED);
         Booking updated = bookingRepository.save(booking);
-
+        notificationService.notifyBookingCancelled(updated);
         return mapToResponse(updated);
     }
 
@@ -153,4 +155,6 @@ public class BookingService {
                 .createdAt(b.getCreatedAt())
                 .build();
     }
+
+
 }

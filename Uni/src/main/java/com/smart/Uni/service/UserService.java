@@ -149,6 +149,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider jwtTokenProvider;
+    private final NotificationService notificationService;
 
     public UserResponse getCurrentUser(String email) {
         User user = userRepository.findByEmail(email)
@@ -208,7 +209,10 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
         user.setRole(role);
-        return mapToResponse(userRepository.save(user));
+//        return mapToResponse(userRepository.save(user));
+        User saved = userRepository.save(user);
+        notificationService.notifyRoleChanged(saved, role, "Admin");
+        return mapToResponse(saved);
     }
 
     private UserResponse mapToResponse(User user) {

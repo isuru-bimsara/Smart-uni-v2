@@ -1,3 +1,81 @@
+////package com.smart.Uni.entity;
+////
+////import com.smart.Uni.enums.NotificationType;
+////import jakarta.persistence.*;
+////import lombok.*;
+////import org.hibernate.annotations.CreationTimestamp;
+////import java.time.LocalDateTime;
+////
+////@Entity
+////@Table(name = "notifications")
+////@Data
+////@NoArgsConstructor
+////@AllArgsConstructor
+////@Builder
+////public class Notification {
+////    @Id
+////    @GeneratedValue(strategy = GenerationType.IDENTITY)
+////    private Long id;
+////
+////    @ManyToOne(fetch = FetchType.LAZY)
+////    @JoinColumn(name = "user_id", nullable = false)
+////    private User user;
+////
+////    @Enumerated(EnumType.STRING)
+////    private NotificationType type;
+////
+////    @Column(nullable = false)
+////    private String message;
+////
+////    @Builder.Default
+////    private Boolean read = false;
+////
+////    private Long relatedId;
+////
+////    @CreationTimestamp
+////    private LocalDateTime createdAt;
+////}
+//
+//
+//package com.smart.Uni.entity;
+//
+//import com.smart.Uni.enums.NotificationType;
+//import jakarta.persistence.*;
+//import lombok.*;
+//import org.hibernate.annotations.CreationTimestamp;
+//import java.time.LocalDateTime;
+//
+//@Entity
+//@Table(name = "notifications")
+//@Data
+//@NoArgsConstructor
+//@AllArgsConstructor
+//@Builder
+//public class Notification {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Long id;
+//
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "user_id", nullable = false)
+//    private User user;
+//
+//    @Enumerated(EnumType.STRING)
+//    private NotificationType type;
+//
+//    @Column(nullable = false)
+//    private String message;
+//
+//    @Builder.Default
+//    @Column(name = "is_read", nullable = false)   // avoid reserved word
+//    private Boolean read = false;
+//
+//    private Long relatedId;
+//
+//    @CreationTimestamp
+//    private LocalDateTime createdAt;
+//}
+
 package com.smart.Uni.entity;
 
 import com.smart.Uni.enums.NotificationType;
@@ -22,12 +100,14 @@ public class Notification {
     private User user;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 50)                  // ↑ allow longer enum names
     private NotificationType type;
 
     @Column(nullable = false)
     private String message;
 
     @Builder.Default
+    @Column(name = "is_read", nullable = false)
     private Boolean read = false;
 
     private Long relatedId;
