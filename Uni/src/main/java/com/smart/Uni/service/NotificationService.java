@@ -77,16 +77,53 @@ public class NotificationService {
     }
 
     /* NEW: comment added -> reporter + assignee (except commenter) */
+//    public void notifyCommentAdded(Ticket ticket, User commenter) {
+//        if (!commenter.getId().equals(ticket.getReporter().getId())) {
+//            createNotification(ticket.getReporter(), NotificationType.COMMENT_ADDED,
+//                    commenter.getName() + " commented on your ticket '" + ticket.getTitle() + "'", ticket.getId());
+//        }
+//        if (ticket.getAssignee() != null &&
+//                !commenter.getId().equals(ticket.getAssignee().getId())) {
+//            createNotification(ticket.getAssignee(), NotificationType.COMMENT_ADDED,
+//                    commenter.getName() + " commented on ticket '" + ticket.getTitle() + "'", ticket.getId());
+//        }
+//    }
+
     public void notifyCommentAdded(Ticket ticket, User commenter) {
+        // Notify reporter (except if reporter is the commenter)
         if (!commenter.getId().equals(ticket.getReporter().getId())) {
-            createNotification(ticket.getReporter(), NotificationType.COMMENT_ADDED,
-                    commenter.getName() + " commented on your ticket '" + ticket.getTitle() + "'", ticket.getId());
+            createNotification(
+                    ticket.getReporter(),
+                    NotificationType.COMMENT_ADDED,
+                    commenter.getName() + " commented on your ticket '" + ticket.getTitle() + "'",
+                    ticket.getId()
+            );
         }
-        if (ticket.getAssignee() != null &&
-                !commenter.getId().equals(ticket.getAssignee().getId())) {
-            createNotification(ticket.getAssignee(), NotificationType.COMMENT_ADDED,
-                    commenter.getName() + " commented on ticket '" + ticket.getTitle() + "'", ticket.getId());
+
+        // If ticket has assignee -> notify assignee (except commenter)
+        if (ticket.getAssignee() != null) {
+            if (!commenter.getId().equals(ticket.getAssignee().getId())) {
+                createNotification(
+                        ticket.getAssignee(),
+                        NotificationType.COMMENT_ADDED,
+                        commenter.getName() + " commented on ticket '" + ticket.getTitle() + "'",
+                        ticket.getId()
+                );
+            }
+            return; // important: don't also broadcast to all technicians
         }
+
+        // Fallback: no assignee yet -> notify all technicians except commenter
+        userRepository.findByRole(UserRole.TECHNICIAN).forEach(tech -> {
+            if (!tech.getId().equals(commenter.getId())) {
+                createNotification(
+                        tech,
+                        NotificationType.COMMENT_ADDED,
+                        commenter.getName() + " commented on unassigned ticket '" + ticket.getTitle() + "'",
+                        ticket.getId()
+                );
+            }
+        });
     }
 
     public void notifyResourceCreated(Resource resource, User actor) {
