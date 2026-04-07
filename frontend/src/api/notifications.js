@@ -7,3 +7,8 @@ export const notificationsApi = {
   markAsRead: (id) => api.patch(`/notifications/${id}/read`),
   markAllAsRead: () => api.patch('/notifications/read-all'),
 }
+
+// Optional helper
+export const unwrapApiData = (res, fallback = null) => {
+  return res?.data?.data ?? fallback;
+};

@@ -1,426 +1,27 @@
-// // //frontend/src/pages/tech/TechTickets.jsx
-
-// // import { useEffect, useState } from "react";
-// // import { ticketsApi } from "../../api/tickets";
-// // import TicketComments from "../TicketComments";
-// // import { MessageSquare } from "lucide-react";
-
-// // const TICKET_CATEGORIES = [
-// //   "ALL",
-// //   "ELECTRICAL",
-// //   "PLUMBING",
-// //   "HVAC",
-// //   "IT",
-// //   "CLEANING",
-// //   "OTHER",
-// // ];
-
-// // export default function TechTickets() {
-// //   const [tickets, setTickets] = useState([]);
-// //   const [filter, setFilter] = useState("ALL");
-// //   const [commentOpen, setCommentOpen] = useState(false);
-// //   const [commentTicket, setCommentTicket] = useState(null); // whole ticket object
-
-// //   useEffect(() => {
-// //     fetchTickets();
-// //     // eslint-disable-next-line react-hooks/exhaustive-deps
-// //   }, [filter]);
-
-// //   const fetchTickets = async () => {
-// //     try {
-// //       let res;
-// //       if (!filter || filter === "ALL") {
-// //         res = await ticketsApi.getAll();
-// //       } else {
-// //         // Only pass valid Java Enum value, not "ALL"
-// //         res = await ticketsApi.getByCategory(filter);
-// //       }
-// //       setTickets(res.data.data || []);
-// //     } catch (err) {
-// //       setTickets([]);
-// //     }
-// //   };
-
-// //   async function handleStatusChange(ticketId, status) {
-// //     try {
-// //       await ticketsApi.updateStatus(ticketId, status);
-// //       fetchTickets();
-// //       if (commentOpen) (setCommentTicket(null), setCommentOpen(false));
-// //     } catch (err) {
-// //       alert(
-// //         "Failed to update status: " +
-// //           (err.response?.data?.message || err.message),
-// //       );
-// //     }
-// //   }
-
-// //   return (
-// //     <div className="max-w-5xl mx-auto">
-// //       <h1 className="text-2xl font-bold mb-6">Assigned Tickets</h1>
-// //       {/* Technician Ticket Type Filter */}
-// //       <div className="mb-6 flex gap-3 items-center">
-// //         <label className="font-semibold">Please select your type:</label>
-// //         <select
-// //           value={filter}
-// //           onChange={(e) => setFilter(e.target.value)}
-// //           className="bg-white border rounded px-4 py-2"
-// //         >
-// //           {TICKET_CATEGORIES.map((cat) => (
-// //             <option key={cat} value={cat}>
-// //               {cat[0] + cat.slice(1).toLowerCase()}
-// //             </option>
-// //           ))}
-// //         </select>
-// //       </div>
-// //       <table className="w-full border">
-// //         <thead>
-// //           <tr className="bg-gray-100">
-// //             <th className="p-2">Title</th>
-// //             <th className="p-2">User</th>
-// //             <th className="p-2">Type</th>
-// //             <th className="p-2">Status</th>
-// //             <th className="p-2">Images</th>
-// //             <th className="p-2">Change Status</th>
-// //             <th className="p-2">Messages</th>
-// //           </tr>
-// //         </thead>
-// //         <tbody>
-// //           {tickets.map((t) => (
-// //             <tr key={t.id} className="border-t">
-// //               <td className="p-2">{t.title}</td>
-// //               <td className="p-2">{t.reporterName}</td>
-// //               <td className="p-2">{t.category}</td>
-// //               <td className="p-2">{t.status}</td>
-// //               <td className="p-2">
-// //                 {t.images && t.images.length > 0 ? (
-// //                   <div className="flex -space-x-3 overflow-hidden">
-// //                     {t.images.map((img, idx) => (
-// //                       <img
-// //                         key={idx}
-// //                         src={img.startsWith("http") ? img : `/${img}`}
-// //                         alt="Ticket"
-// //                         style={{
-// //                           width: "40px",
-// //                           height: "40px",
-// //                           objectFit: "cover",
-// //                           borderRadius: "6px",
-// //                         }}
-// //                       />
-// //                     ))}
-// //                   </div>
-// //                 ) : (
-// //                   <span className="text-xs text-gray-400">No image</span>
-// //                 )}
-// //               </td>
-// //               <td className="p-2">
-// //                 <select
-// //                   value={t.status}
-// //                   onChange={(e) => handleStatusChange(t.id, e.target.value)}
-// //                   className="border rounded px-2 py-1"
-// //                 >
-// //                   <option value="OPEN">Open</option>
-// //                   <option value="IN_PROGRESS">In Progress</option>
-// //                   <option value="RESOLVED">Resolved</option>
-// //                   <option value="CLOSED">Closed</option>
-// //                 </select>
-// //               </td>
-// //               <td className="p-2">
-// //                 <button
-// //                   onClick={() => {
-// //                     setCommentTicket(t);
-// //                     setCommentOpen(true);
-// //                   }}
-// //                   className="inline-flex items-center gap-1 px-3 py-2 text-indigo-600 border border-indigo-200 rounded-lg hover:bg-indigo-50 font-semibold text-xs active:scale-95"
-// //                 >
-// //                   <MessageSquare className="w-4 h-4" />
-// //                   Messages
-// //                 </button>
-// //               </td>
-// //             </tr>
-// //           ))}
-// //         </tbody>
-// //       </table>
-// //       <TicketComments
-// //         ticketId={commentOpen ? commentTicket?.id : null}
-// //         open={commentOpen}
-// //         onClose={() => {
-// //           setCommentOpen(false);
-// //           setCommentTicket(null);
-// //         }}
-// //       />
-// //     </div>
-// //   );
-// // }
-
-
-// // frontend/src/pages/tech/TechTickets.jsx
-
-// import { useEffect, useState } from "react";
-// import { ticketsApi } from "../../api/tickets";
-// import TicketComments from "../TicketComments";
-// import { MessageSquare } from "lucide-react";
-
-// const BASE_URL = "http://localhost:8083";
-
-// const TICKET_CATEGORIES = [
-//   "ALL",
-//   "ELECTRICAL",
-//   "PLUMBING",
-//   "HVAC",
-//   "IT",
-//   "CLEANING",
-//   "OTHER",
-// ];
-
-// export default function TechTickets() {
-//   const [tickets, setTickets] = useState([]);
-//   const [filter, setFilter] = useState("ALL");
-
-//   const [commentOpen, setCommentOpen] = useState(false);
-//   const [commentTicket, setCommentTicket] = useState(null);
-
-//   const [imageModal, setImageModal] = useState({ open: false, src: "" });
-
-//   // ✅ NEW: Selected ticket (for details view)
-//   const [selectedTicket, setSelectedTicket] = useState(null);
-
-//   useEffect(() => {
-//     fetchTickets();
-//   }, [filter]);
-
-//   const fetchTickets = async () => {
-//     try {
-//       let res;
-//       if (!filter || filter === "ALL") {
-//         res = await ticketsApi.getAll();
-//       } else {
-//         res = await ticketsApi.getByCategory(filter);
-//       }
-//       setTickets(res.data.data || []);
-//     } catch (err) {
-//       console.error(err);
-//       setTickets([]);
-//     }
-//   };
-
-//   async function handleStatusChange(ticketId, status) {
-//     try {
-//       await ticketsApi.updateStatus(ticketId, status);
-//       fetchTickets();
-
-//       // update modal view also
-//       if (selectedTicket) {
-//         setSelectedTicket({ ...selectedTicket, status });
-//       }
-//     } catch (err) {
-//       alert("Failed to update status: " + (err.response?.data?.message || err.message));
-//     }
-//   }
-
-//   return (
-//     <div className="max-w-5xl mx-auto">
-//       <h1 className="text-2xl font-bold mb-6">Assigned Tickets</h1>
-
-//       {/* FILTER */}
-//       <div className="mb-6 flex gap-3 items-center">
-//         <label className="font-semibold">Please select your type:</label>
-//         <select
-//           value={filter}
-//           onChange={(e) => setFilter(e.target.value)}
-//           className="bg-white border rounded px-4 py-2"
-//         >
-//           {TICKET_CATEGORIES.map((cat) => (
-//             <option key={cat} value={cat}>
-//               {cat[0] + cat.slice(1).toLowerCase()}
-//             </option>
-//           ))}
-//         </select>
-//       </div>
-
-//       {/* TABLE */}
-//       <table className="w-full border">
-//         <thead>
-//           <tr className="bg-gray-100">
-//             <th className="p-2">Title</th>
-//             <th className="p-2">User</th>
-//             <th className="p-2">Type</th>
-//             <th className="p-2">Status</th>
-//             <th className="p-2">Images</th>
-//             <th className="p-2">Messages</th>
-//           </tr>
-//         </thead>
-
-//         <tbody>
-//           {tickets.map((t) => (
-//             <tr
-//               key={t.id}
-//               className="border-t cursor-pointer hover:bg-gray-50"
-//               onClick={() => setSelectedTicket(t)}
-//             >
-//               <td className="p-2">{t.title}</td>
-//               <td className="p-2">{t.reporterName}</td>
-//               <td className="p-2">{t.category}</td>
-//               <td className="p-2">{t.status}</td>
-
-//               {/* IMAGES */}
-//               <td className="p-2">
-//                 {t.images && t.images.length > 0 ? (
-//                   <div className="flex -space-x-3 overflow-hidden">
-//                     {t.images.map((img, idx) => {
-//                       const imageUrl = img.startsWith("http")
-//                         ? img
-//                         : `${BASE_URL}/${img}`;
-
-//                       return (
-//                         <img
-//                           key={idx}
-//                           src={imageUrl}
-//                           alt="Ticket"
-//                           className="w-10 h-10 object-cover rounded cursor-pointer border"
-//                           onClick={(e) => {
-//                             e.stopPropagation(); // prevent row click
-//                             setImageModal({ open: true, src: imageUrl });
-//                           }}
-//                         />
-//                       );
-//                     })}
-//                   </div>
-//                 ) : (
-//                   <span className="text-xs text-gray-400">No image</span>
-//                 )}
-//               </td>
-
-//               {/* COMMENTS */}
-//               <td className="p-2">
-//                 <button
-//                   onClick={(e) => {
-//                     e.stopPropagation();
-//                     setCommentTicket(t);
-//                     setCommentOpen(true);
-//                   }}
-//                   className="inline-flex items-center gap-1 px-3 py-2 text-indigo-600 border rounded-lg text-xs"
-//                 >
-//                   <MessageSquare className="w-4 h-4" />
-//                   Messages
-//                 </button>
-//               </td>
-//             </tr>
-//           ))}
-//         </tbody>
-//       </table>
-
-//       {/* COMMENTS MODAL */}
-//       <TicketComments
-//         ticketId={commentOpen ? commentTicket?.id : null}
-//         open={commentOpen}
-//         onClose={() => {
-//           setCommentOpen(false);
-//           setCommentTicket(null);
-//         }}
-//       />
-
-//       {/* IMAGE MODAL */}
-//       {imageModal.open && (
-//         <div
-//           className="fixed inset-0 bg-black bg-opacity-80 flex justify-center items-center z-50"
-//           onClick={() => setImageModal({ open: false, src: "" })}
-//         >
-//           <img
-//             src={imageModal.src}
-//             alt="Full"
-//             className="max-h-[90vh] max-w-[90vw] rounded"
-//             onClick={(e) => e.stopPropagation()}
-//           />
-//         </div>
-//       )}
-
-//       {/* ✅ TICKET DETAILS MODAL */}
-//       {selectedTicket && (
-//         <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
-//           <div className="bg-white rounded-xl p-6 w-[500px] max-h-[90vh] overflow-y-auto relative">
-
-//             {/* CLOSE */}
-//             <button
-//               onClick={() => setSelectedTicket(null)}
-//               className="absolute top-2 right-2 bg-gray-200 px-3 py-1 rounded-full"
-//             >
-//               ✕
-//             </button>
-
-//             <h2 className="text-xl font-bold mb-4">Ticket Details</h2>
-
-//             <p><b>Title:</b> {selectedTicket.title}</p>
-
-//             {/* ✅ DESCRIPTION */}
-//             <p className="mt-2">
-//               <b>Description:</b><br />
-//               {selectedTicket.description}
-//             </p>
-
-//             <p className="mt-2"><b>User:</b> {selectedTicket.reporterName}</p>
-//             <p className="mt-2"><b>Category:</b> {selectedTicket.category}</p>
-
-//             {/* STATUS UPDATE */}
-//             <div className="mt-4">
-//               <b>Status:</b>
-//               <select
-//                 value={selectedTicket.status}
-//                 onChange={(e) =>
-//                   handleStatusChange(selectedTicket.id, e.target.value)
-//                 }
-//                 className="border ml-2 px-2 py-1"
-//               >
-//                 <option value="OPEN">Open</option>
-//                 <option value="IN_PROGRESS">In Progress</option>
-//                 <option value="RESOLVED">Resolved</option>
-//                 <option value="CLOSED">Closed</option>
-//               </select>
-//             </div>
-
-//             {/* IMAGES */}
-//             <div className="mt-4">
-//               <b>Images:</b>
-//               <div className="flex gap-2 mt-2 flex-wrap">
-//                 {selectedTicket.images && selectedTicket.images.length > 0 ? (
-//                   selectedTicket.images.map((img, i) => {
-//                     const url = img.startsWith("http")
-//                       ? img
-//                       : `${BASE_URL}/${img}`;
-
-//                     return (
-//                       <img
-//                         key={i}
-//                         src={url}
-//                         className="w-20 h-20 object-cover rounded cursor-pointer"
-//                         onClick={() =>
-//                           setImageModal({ open: true, src: url })
-//                         }
-//                       />
-//                     );
-//                   })
-//                 ) : (
-//                   <p>No images</p>
-//                 )}
-//               </div>
-//             </div>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-
 // frontend/src/pages/tech/TechTickets.jsx
 
 import { useEffect, useState, useMemo } from "react";
 import { ticketsApi } from "../../api/tickets";
 import TicketComments from "../TicketComments";
-import { MessageSquare, Filter, Clock, AlertCircle, CheckCircle2 } from "lucide-react";
+import {
+  MessageSquare,
+  Filter,
+  Clock,
+  AlertCircle,
+  CheckCircle2,
+} from "lucide-react";
 
 const BASE_URL = "http://localhost:8083";
 
-const TICKET_CATEGORIES = ["ALL", "ELECTRICAL", "PLUMBING", "HVAC", "IT", "CLEANING", "OTHER"];
+const TICKET_CATEGORIES = [
+  "ALL",
+  "ELECTRICAL",
+  "PLUMBING",
+  "HVAC",
+  "IT",
+  "CLEANING",
+  "OTHER",
+];
 const STATUS_OPTIONS = ["ALL", "OPEN", "IN_PROGRESS", "RESOLVED", "CLOSED"];
 const PRIORITY_OPTIONS = ["ALL", "CRITICAL", "HIGH", "MEDIUM", "LOW"];
 
@@ -495,49 +96,73 @@ export default function TechTickets() {
 
   const getPriorityColor = (p) => {
     switch (p) {
-      case "CRITICAL": return "bg-red-100 text-red-700 border-red-200";
-      case "HIGH": return "bg-orange-100 text-orange-700 border-orange-200";
-      case "MEDIUM": return "bg-blue-100 text-blue-700 border-blue-200";
-      default: return "bg-gray-100 text-gray-700 border-gray-200";
+      case "CRITICAL":
+        return "bg-red-100 text-red-700 border-red-200";
+      case "HIGH":
+        return "bg-orange-100 text-orange-700 border-orange-200";
+      case "MEDIUM":
+        return "bg-blue-100 text-blue-700 border-blue-200";
+      default:
+        return "bg-gray-100 text-gray-700 border-gray-200";
     }
   };
 
   return (
     <div className="max-w-6xl mx-auto pb-20">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-        <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">Assigned Tickets</h1>
-        
+        <h1 className="text-3xl font-extrabold text-gray-900 tracking-tight">
+          Assigned Tickets
+        </h1>
+
         {/* FILTER BAR */}
         <div className="flex flex-wrap gap-3 bg-white p-3 rounded-2xl shadow-sm border border-gray-100 w-full md:w-auto">
           <div className="flex items-center gap-2 px-2 border-r border-gray-100">
             <Filter size={16} className="text-gray-400" />
-            <span className="text-xs font-bold text-gray-500 uppercase">Filters</span>
+            <span className="text-xs font-bold text-gray-500 uppercase">
+              Filters
+            </span>
           </div>
-          
-          <select 
-            value={filters.category} 
-            onChange={(e) => setFilters({...filters, category: e.target.value})}
+
+          <select
+            value={filters.category}
+            onChange={(e) =>
+              setFilters({ ...filters, category: e.target.value })
+            }
             className="text-sm font-medium text-blue-600 bg-transparent outline-none cursor-pointer"
           >
-            {TICKET_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
+            {TICKET_CATEGORIES.map((c) => (
+              <option key={c} value={c}>
+                {c}
+              </option>
+            ))}
           </select>
 
-          <select 
-            value={filters.status} 
-            onChange={(e) => setFilters({...filters, status: e.target.value})}
+          <select
+            value={filters.status}
+            onChange={(e) => setFilters({ ...filters, status: e.target.value })}
             className="text-sm font-medium text-green-600 bg-transparent outline-none cursor-pointer border-l pl-3 border-gray-100"
           >
             <option value="ALL">All Status</option>
-            {STATUS_OPTIONS.slice(1).map(s => <option key={s} value={s}>{s}</option>)}
+            {STATUS_OPTIONS.slice(1).map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
           </select>
 
-          <select 
-            value={filters.priority} 
-            onChange={(e) => setFilters({...filters, priority: e.target.value})}
+          <select
+            value={filters.priority}
+            onChange={(e) =>
+              setFilters({ ...filters, priority: e.target.value })
+            }
             className="text-sm font-medium text-red-600 bg-transparent outline-none cursor-pointer border-l pl-3 border-gray-100"
           >
             <option value="ALL">All Priority</option>
-            {PRIORITY_OPTIONS.slice(1).map(p => <option key={p} value={p}>{p}</option>)}
+            {PRIORITY_OPTIONS.slice(1).map((p) => (
+              <option key={p} value={p}>
+                {p}
+              </option>
+            ))}
           </select>
         </div>
       </div>
@@ -545,23 +170,33 @@ export default function TechTickets() {
       {/* TICKET GRID */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {processedTickets.map((t) => (
-          <div 
-            key={t.id} 
+          <div
+            key={t.id}
             onClick={() => setSelectedTicket(t)}
             className={`bg-white rounded-2xl border transition-all cursor-pointer hover:shadow-xl hover:-translate-y-1 overflow-hidden flex flex-col ${
-                t.status === 'CLOSED' ? 'opacity-70 grayscale-[0.5]' : 'border-gray-100 shadow-sm'
+              t.status === "CLOSED"
+                ? "opacity-70 grayscale-[0.5]"
+                : "border-gray-100 shadow-sm"
             }`}
           >
             {/* Card Header: Priority Ribbon */}
-            <div className={`h-1.5 w-full ${
-                t.priority === 'CRITICAL' ? 'bg-red-500' : 
-                t.priority === 'HIGH' ? 'bg-orange-500' : 
-                t.priority === 'MEDIUM' ? 'bg-blue-500' : 'bg-gray-300'
-            }`} />
+            <div
+              className={`h-1.5 w-full ${
+                t.priority === "CRITICAL"
+                  ? "bg-red-500"
+                  : t.priority === "HIGH"
+                    ? "bg-orange-500"
+                    : t.priority === "MEDIUM"
+                      ? "bg-blue-500"
+                      : "bg-gray-300"
+              }`}
+            />
 
             <div className="p-5 flex-1">
               <div className="flex justify-between items-start mb-3">
-                <span className={`text-[10px] font-bold px-2 py-1 rounded-md border ${getPriorityColor(t.priority)}`}>
+                <span
+                  className={`text-[10px] font-bold px-2 py-1 rounded-md border ${getPriorityColor(t.priority)}`}
+                >
                   {t.priority}
                 </span>
                 <span className="text-xs text-gray-400 font-medium flex items-center gap-1">
@@ -570,26 +205,30 @@ export default function TechTickets() {
                 </span>
               </div>
 
-              <h3 className="font-bold text-gray-800 text-lg mb-2 line-clamp-1">{t.title}</h3>
-              <p className="text-gray-500 text-sm mb-4 line-clamp-2">{t.description}</p>
+              <h3 className="font-bold text-gray-800 text-lg mb-2 line-clamp-1">
+                {t.title}
+              </h3>
+              <p className="text-gray-500 text-sm mb-4 line-clamp-2">
+                {t.description}
+              </p>
 
               {/* Card Images Preview */}
               <div className="flex gap-2 mb-4 overflow-x-auto pb-1">
                 {t.images?.slice(0, 3).map((img, idx) => (
-                    <img 
-                      key={idx} 
-                      src={img.startsWith("http") ? img : `${BASE_URL}/${img}`} 
-                      className="w-12 h-12 object-cover rounded-lg border border-gray-100"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setImageModal({ open: true, src: e.target.src });
-                      }}
-                    />
+                  <img
+                    key={idx}
+                    src={img.startsWith("http") ? img : `${BASE_URL}/${img}`}
+                    className="w-12 h-12 object-cover rounded-lg border border-gray-100"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setImageModal({ open: true, src: e.target.src });
+                    }}
+                  />
                 ))}
                 {t.images?.length > 3 && (
-                    <div className="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-xs font-bold text-gray-400">
-                        +{t.images.length - 3}
-                    </div>
+                  <div className="w-12 h-12 bg-gray-50 rounded-lg flex items-center justify-center text-xs font-bold text-gray-400">
+                    +{t.images.length - 3}
+                  </div>
                 )}
               </div>
             </div>
@@ -598,12 +237,18 @@ export default function TechTickets() {
             <div className="px-5 py-3 bg-gray-50 border-t border-gray-100 flex justify-between items-center">
               <div className="flex items-center gap-2">
                 <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center text-[10px] text-white font-bold uppercase">
-                    {t.reporterName?.charAt(0)}
+                  {t.reporterName?.charAt(0)}
                 </div>
-                <span className="text-xs font-semibold text-gray-600">{t.reporterName}</span>
+                <span className="text-xs font-semibold text-gray-600">
+                  {t.reporterName}
+                </span>
               </div>
-              <button 
-                onClick={(e) => { e.stopPropagation(); setCommentTicket(t); setCommentOpen(true); }}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setCommentTicket(t);
+                  setCommentOpen(true);
+                }}
                 className="text-blue-600 hover:text-blue-800 transition-colors"
               >
                 <MessageSquare size={18} />
@@ -617,16 +262,16 @@ export default function TechTickets() {
 
       {/* FULL IMAGE LIGHTBOX */}
       {imageModal.open && (
-        <div 
+        <div
           className="fixed inset-0 bg-black/95 flex items-center justify-center z-[100] backdrop-blur-sm transition-all"
           onClick={() => setImageModal({ open: false, src: "" })}
         >
           <button className="absolute top-6 right-6 text-white hover:rotate-90 transition-transform">
             <CheckCircle2 size={32} />
           </button>
-          <img 
-            src={imageModal.src} 
-            className="max-h-[85vh] max-w-[90vw] object-contain rounded-lg shadow-2xl" 
+          <img
+            src={imageModal.src}
+            className="max-h-[85vh] max-w-[90vw] object-contain rounded-lg shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           />
         </div>
@@ -636,47 +281,76 @@ export default function TechTickets() {
       {selectedTicket && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-[60] p-4">
           <div className="bg-white rounded-3xl p-8 w-full max-w-xl max-h-[90vh] overflow-y-auto relative shadow-2xl">
-            <button onClick={() => setSelectedTicket(null)} className="absolute top-6 right-6 text-gray-400 hover:text-gray-600">✕</button>
-            
-            <span className={`text-xs font-bold px-3 py-1 rounded-full ${getPriorityColor(selectedTicket.priority)}`}>
+            <button
+              onClick={() => setSelectedTicket(null)}
+              className="absolute top-6 right-6 text-gray-400 hover:text-gray-600"
+            >
+              ✕
+            </button>
+
+            <span
+              className={`text-xs font-bold px-3 py-1 rounded-full ${getPriorityColor(selectedTicket.priority)}`}
+            >
               {selectedTicket.priority} Priority
             </span>
-            <h2 className="text-2xl font-black text-gray-900 mt-4 mb-2">{selectedTicket.title}</h2>
-            
+            <h2 className="text-2xl font-black text-gray-900 mt-4 mb-2">
+              {selectedTicket.title}
+            </h2>
+
             <div className="flex gap-4 mb-6">
-                <div className="flex items-center gap-1 text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-md">
-                    <AlertCircle size={14} /> {selectedTicket.category}
-                </div>
-                <div className="flex items-center gap-1 text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-md">
-                    <Clock size={14} /> {new Date(selectedTicket.createdAt).toLocaleString()}
-                </div>
+              <div className="flex items-center gap-1 text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-md">
+                <AlertCircle size={14} /> {selectedTicket.category}
+              </div>
+              <div className="flex items-center gap-1 text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-md">
+                <Clock size={14} />{" "}
+                {new Date(selectedTicket.createdAt).toLocaleString()}
+              </div>
             </div>
 
             <div className="bg-gray-50 p-4 rounded-2xl mb-6">
-                <p className="text-gray-700 leading-relaxed">{selectedTicket.description}</p>
+              <p className="text-gray-700 leading-relaxed">
+                {selectedTicket.description}
+              </p>
             </div>
 
             <div className="mb-6">
-              <label className="block text-sm font-bold text-gray-700 mb-2 underline decoration-blue-500 decoration-2">Status Management</label>
+              <label className="block text-sm font-bold text-gray-700 mb-2 underline decoration-blue-500 decoration-2">
+                Status Management
+              </label>
               <select
                 value={selectedTicket.status}
-                onChange={(e) => handleStatusChange(selectedTicket.id, e.target.value)}
+                onChange={(e) =>
+                  handleStatusChange(selectedTicket.id, e.target.value)
+                }
                 className="w-full p-3 rounded-xl border border-gray-200 bg-white font-semibold text-gray-800 outline-none focus:ring-2 focus:ring-blue-500"
               >
-                {STATUS_OPTIONS.slice(1).map(s => <option key={s} value={s}>{s}</option>)}
+                {STATUS_OPTIONS.slice(1).map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
               </select>
             </div>
 
             <div>
-              <label className="block text-sm font-bold text-gray-700 mb-3">Evidence Images</label>
+              <label className="block text-sm font-bold text-gray-700 mb-3">
+                Evidence Images
+              </label>
               <div className="grid grid-cols-4 gap-3">
                 {selectedTicket.images?.map((img, i) => (
-                    <img 
-                        key={i} 
-                        src={img.startsWith("http") ? img : `${BASE_URL}/${img}`} 
-                        className="w-full h-20 object-cover rounded-xl cursor-pointer hover:ring-2 ring-blue-500 transition-all"
-                        onClick={() => setImageModal({ open: true, src: img.startsWith("http") ? img : `${BASE_URL}/${img}` })}
-                    />
+                  <img
+                    key={i}
+                    src={img.startsWith("http") ? img : `${BASE_URL}/${img}`}
+                    className="w-full h-20 object-cover rounded-xl cursor-pointer hover:ring-2 ring-blue-500 transition-all"
+                    onClick={() =>
+                      setImageModal({
+                        open: true,
+                        src: img.startsWith("http")
+                          ? img
+                          : `${BASE_URL}/${img}`,
+                      })
+                    }
+                  />
                 ))}
               </div>
             </div>
@@ -688,7 +362,10 @@ export default function TechTickets() {
       <TicketComments
         ticketId={commentOpen ? commentTicket?.id : null}
         open={commentOpen}
-        onClose={() => { setCommentOpen(false); setCommentTicket(null); }}
+        onClose={() => {
+          setCommentOpen(false);
+          setCommentTicket(null);
+        }}
       />
     </div>
   );
