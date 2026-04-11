@@ -1,165 +1,11 @@
-// // // //frontend/src/layouts/TechLayout.jsx
-// // // import { Link, Outlet } from 'react-router-dom';
 
-// // // export default function TechLayout() {
-// // //   return (
-// // //     <div className="flex h-screen bg-gray-100">
-// // //       <aside className="w-64 bg-white shadow-md p-6 flex flex-col">
-// // //         <h2 className="text-xl font-bold mb-6">Technician Panel</h2>
-// // //         <nav className="flex flex-col gap-3">
-// // //           <Link to="/tech/dashboard" className="hover:text-blue-600">Dashboard</Link>
-// // //           <Link to="/tech/tickets" className="hover:text-blue-600">Assigned Tickets</Link>
-// // //           <Link to="/tech/notifications" className="hover:text-blue-600">Notifications</Link>
-// // //         </nav>
-// // //       </aside>
-// // //       <main className="flex-1 p-6 overflow-y-auto">
-// // //         <Outlet />
-// // //       </main>
-// // //     </div>
-// // //   )
-// // // }
-
-// // // frontend/src/layouts/TechLayout.jsx
-// // import { Link, Outlet, useLocation } from 'react-router-dom';
-
-// // export default function TechLayout() {
-// //   const location = useLocation();
-
-// //   const navLinkClass = (path) =>
-// //     `px-4 py-2 rounded-lg transition-colors ${
-// //       location.pathname === path
-// //         ? "bg-blue-50 text-blue-600 font-semibold"
-// //         : "text-gray-600 hover:bg-gray-50 hover:text-blue-600"
-// //     }`;
-
-// //   return (
-// //     <div className="flex h-screen bg-gray-100 font-sans">
-// //       {/* Sidebar */}
-// //       <aside className="w-64 bg-white shadow-lg p-6 flex flex-col border-r border-gray-200">
-// //         <h2 className="text-xl font-bold mb-8 text-gray-800">Technician Panel</h2>
-
-// //         <nav className="flex flex-col gap-2">
-// //           <Link to="/tech/dashboard" className={navLinkClass('/tech/dashboard')}>
-// //             Dashboard
-// //           </Link>
-// //           <Link to="/tech/tickets" className={navLinkClass('/tech/tickets')}>
-// //             Assigned Tickets
-// //           </Link>
-// //           <Link to="/tech/notifications" className={navLinkClass('/tech/notifications')}>
-// //             Notifications
-// //           </Link>
-// //         </nav>
-
-// //         <div className="mt-auto pt-6 border-t border-gray-100">
-// //           <button className="text-sm text-red-500 hover:text-red-700 px-4">Logout</button>
-// //         </div>
-// //       </aside>
-
-// //       {/* Main Content Area */}
-// //       <main className="flex-1 p-8 overflow-y-auto">
-// //         <Outlet />
-// //       </main>
-// //     </div>
-// //   );
-// // }
-
-// // frontend/src/layouts/TechLayout.jsx
-// import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
-// import { useEffect, useState } from "react";
-// import api from "../api/axios";
-// import { LogOut } from "lucide-react";
-
-// export default function TechLayout() {
-//   const location = useLocation();
-//   const navigate = useNavigate();
-//   const [user, setUser] = useState(null);
-
-//   // ✅ Fetch logged-in user
-//   useEffect(() => {
-//     fetchUser();
-//   }, []);
-
-//   const fetchUser = async () => {
-//     try {
-//       const res = await api.get("/auth/me");
-//       setUser(res.data.data);
-//     } catch (err) {
-//       console.log(err);
-//     }
-//   };
-
-//   // ✅ Logout
-//   const handleLogout = () => {
-//     localStorage.removeItem("token");
-//     navigate("/login");
-//   };
-
-//   const navLinkClass = (path) =>
-//     `px-4 py-2 rounded-lg transition-colors ${
-//       location.pathname === path
-//         ? "bg-blue-50 text-blue-600 font-semibold"
-//         : "text-gray-600 hover:bg-gray-50 hover:text-blue-600"
-//     }`;
-
-//   return (
-//     <div className="flex h-screen bg-gray-100 font-sans">
-//       {/* Sidebar */}
-//       <aside className="w-64 bg-white shadow-lg p-6 flex flex-col border-r border-gray-200">
-//         {/* Logo + User */}
-//         <div className="flex flex-col items-center mb-8">
-//           {user?.picture ? (
-//             <img
-//               src={user.picture}
-//               alt="profile"
-//               className="w-16 h-16 rounded-full object-cover mb-2"
-//             />
-//           ) : (
-//             <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-2">
-//               <LogOut className="w-6 h-6 text-blue-600" />
-//             </div>
-//           )}
-//           <p className="font-bold text-gray-800">{user?.name || "Technician"}</p>
-//           <p className="text-sm text-gray-500 truncate">{user?.email}</p>
-//         </div>
-
-//         {/* Navigation */}
-//         <nav className="flex flex-col gap-2">
-//           <Link to="/tech/dashboard" className={navLinkClass("/tech/dashboard")}>
-//             Dashboard
-//           </Link>
-//           <Link to="/tech/tickets" className={navLinkClass("/tech/tickets")}>
-//             Assigned Tickets
-//           </Link>
-//           <Link to="/tech/notifications" className={navLinkClass("/tech/notifications")}>
-//             Notifications
-//           </Link>
-//         </nav>
-
-//         {/* Logout */}
-//         <div className="mt-auto pt-6 border-t border-gray-100">
-//           <button
-//             onClick={handleLogout}
-//             className="w-full flex items-center justify-center gap-2 text-red-500 hover:text-red-700 px-4 py-2 rounded-lg transition-colors font-semibold"
-//           >
-//             <LogOut className="w-5 h-5" />
-//             Logout
-//           </button>
-//         </div>
-//       </aside>
-
-//       {/* Main Content Area */}
-//       <main className="flex-1 p-8 overflow-y-auto bg-gray-100">
-//         <Outlet />
-//       </main>
-//     </div>
-//   );
-// }
 
 // frontend/src/layouts/TechLayout.jsx
 
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../api/axios";
+import { useAuth } from "../context/AuthContext";
 
 import {
   LayoutDashboard,
@@ -172,7 +18,7 @@ import {
 
 export default function TechLayout() {
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+  const { user, setUser } = useAuth();
 
   // ✅ GET LOGGED-IN USER
   useEffect(() => {
