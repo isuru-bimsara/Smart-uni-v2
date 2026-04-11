@@ -23,23 +23,23 @@
 
 // import { NavLink, Outlet } from 'react-router-dom';
 // // Using Lucide icons to match the professional look
-// import { 
-//   LayoutDashboard, 
-//   CalendarCheck, 
-//   Box, 
-//   Ticket, 
-//   Bell, 
+// import {
+//   LayoutDashboard,
+//   CalendarCheck,
+//   Box,
+//   Ticket,
+//   Bell,
 //   LogOut,
-//   UserCircle 
+//   UserCircle
 // } from 'lucide-react';
 
 // export default function UserLayout() {
-  
+
 //   // Helper for active link styling
-//   const navItemClass = ({ isActive }) => 
+//   const navItemClass = ({ isActive }) =>
 //     `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${
-//       isActive 
-//         ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200' 
+//       isActive
+//         ? 'bg-indigo-600 text-white shadow-md shadow-indigo-200'
 //         : 'text-slate-600 hover:bg-indigo-50 hover:text-indigo-600'
 //     }`;
 
@@ -47,7 +47,7 @@
 //     <div className="flex h-screen bg-slate-50 font-sans">
 //       {/* SIDEBAR */}
 //       <aside className="w-72 bg-white border-r border-slate-200 flex flex-col">
-        
+
 //         {/* Logo Section */}
 //         <div className="p-8">
 //           <div className="flex items-center gap-3">
@@ -65,7 +65,7 @@
 //           <p className="px-4 text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">
 //             Main Menu
 //           </p>
-          
+
 //           <NavLink to="/user/dashboard" className={navItemClass}>
 //             <LayoutDashboard className="w-5 h-5" />
 //             <span className="font-semibold">Dashboard</span>
@@ -101,7 +101,7 @@
 //               <p className="text-xs text-slate-500 truncate">Member ID: #4421</p>
 //             </div>
 //           </div>
-          
+
 //           <button className="w-full flex items-center gap-3 px-4 py-3 text-rose-500 font-semibold hover:bg-rose-50 rounded-xl transition-colors">
 //             <LogOut className="w-5 h-5" />
 //             Logout
@@ -111,13 +111,13 @@
 
 //       {/* MAIN CONTENT AREA */}
 //       <main className="flex-1 flex flex-col overflow-hidden">
-        
+
 //         {/* Top Navbar for Context */}
 //         <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8">
 //           <h1 className="text-slate-500 font-medium">
 //             Welcome back, <span className="text-slate-800 font-bold">John</span>
 //           </h1>
-          
+
 //           <div className="flex items-center gap-4">
 //             <button className="relative p-2 text-slate-400 hover:text-indigo-600 transition-colors">
 //               <Bell className="w-6 h-6" />
@@ -147,7 +147,7 @@ import {
   Bell,
   LogOut,
   UserCircle,
-  Settings
+  Settings,
 } from "lucide-react";
 
 export default function UserLayout() {
@@ -239,7 +239,11 @@ export default function UserLayout() {
           <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-2xl mb-4">
             {user?.picture ? (
               <img
-                src={user.picture}
+                src={
+                  user.picture?.startsWith("http")
+                    ? user.picture
+                    : `http://localhost:8083${user.picture}`
+                }
                 alt="profile"
                 className="w-10 h-10 rounded-full object-cover"
               />

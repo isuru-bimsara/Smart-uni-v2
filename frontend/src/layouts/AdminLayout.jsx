@@ -455,8 +455,12 @@ export default function AdminLayout() {
 
             {/* PROFILE IMAGE */}
             {user?.picture ? (
-              <img
-                src={user.picture}
+          <img
+                src={
+                  user.picture?.startsWith("http")
+                    ? user.picture
+                    : `http://localhost:8083${user.picture}`
+                }
                 alt="profile"
                 className="w-10 h-10 rounded-full object-cover"
               />

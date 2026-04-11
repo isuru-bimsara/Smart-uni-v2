@@ -25,10 +25,10 @@
 // // export default function TechLayout() {
 // //   const location = useLocation();
 
-// //   const navLinkClass = (path) => 
+// //   const navLinkClass = (path) =>
 // //     `px-4 py-2 rounded-lg transition-colors ${
-// //       location.pathname === path 
-// //         ? "bg-blue-50 text-blue-600 font-semibold" 
+// //       location.pathname === path
+// //         ? "bg-blue-50 text-blue-600 font-semibold"
 // //         : "text-gray-600 hover:bg-gray-50 hover:text-blue-600"
 // //     }`;
 
@@ -37,7 +37,7 @@
 // //       {/* Sidebar */}
 // //       <aside className="w-64 bg-white shadow-lg p-6 flex flex-col border-r border-gray-200">
 // //         <h2 className="text-xl font-bold mb-8 text-gray-800">Technician Panel</h2>
-        
+
 // //         <nav className="flex flex-col gap-2">
 // //           <Link to="/tech/dashboard" className={navLinkClass('/tech/dashboard')}>
 // //             Dashboard
@@ -155,7 +155,6 @@
 //   );
 // }
 
-
 // frontend/src/layouts/TechLayout.jsx
 
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
@@ -168,11 +167,10 @@ import {
   Bell,
   LogOut,
   ShieldCheck,
-  Settings
+  Settings,
 } from "lucide-react";
 
 export default function TechLayout() {
-
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
 
@@ -206,10 +204,8 @@ export default function TechLayout() {
 
   return (
     <div className="flex h-screen bg-slate-50 font-sans">
-
       {/* SIDEBAR */}
       <aside className="w-72 bg-white border-r border-slate-200 flex flex-col">
-
         {/* LOGO */}
         <div className="p-8">
           <div className="flex items-center gap-3">
@@ -251,13 +247,15 @@ export default function TechLayout() {
 
         {/* ✅ PROFILE + LOGOUT */}
         <div className="p-4 border-t border-slate-100">
-
           <div className="flex items-center gap-3 p-3 bg-slate-50 rounded-2xl mb-4">
-
             {/* PROFILE IMAGE */}
             {user?.picture ? (
               <img
-                src={user.picture}
+                src={
+                  user.picture?.startsWith("http")
+                    ? user.picture
+                    : `http://localhost:8083${user.picture}`
+                }
                 alt="profile"
                 className="w-10 h-10 rounded-full object-cover"
               />
@@ -291,7 +289,6 @@ export default function TechLayout() {
 
       {/* MAIN */}
       <main className="flex-1 flex flex-col overflow-hidden">
-
         {/* TOP BAR */}
         <header className="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-8">
           <h1 className="text-slate-500 font-medium">
