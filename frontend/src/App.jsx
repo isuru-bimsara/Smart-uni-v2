@@ -40,6 +40,9 @@ import AuthCallback from "./pages/AuthCallback";
 // ProtectedRoute
 import ProtectedRoute from "./components/ProtectedRoute";
 
+// Profile Page
+import UpdateProfile from "./pages/UpdateProfile";
+
 export default function App() {
   return (
     <Router>
@@ -64,6 +67,7 @@ export default function App() {
           <Route path="users" element={<AdminUsers />} />
           <Route path="tickets" element={<AdminTickets />} />
           <Route path="notifications" element={<AdminNotifications />} />
+          <Route path="profile" element={<UpdateProfile />} />
           <Route path="*" element={<Navigate to="dashboard" replace />} />
         </Route>
 
@@ -82,6 +86,7 @@ export default function App() {
           <Route path="book/:id" element={<BookResource />} />
           <Route path="tickets" element={<UserTickets />} />
           <Route path="notifications" element={<UserNotifications />} />
+          <Route path="profile" element={<UpdateProfile />} />
           <Route path="*" element={<Navigate to="dashboard" replace />} />
         </Route>
 
@@ -97,6 +102,7 @@ export default function App() {
           <Route path="dashboard" element={<TechDashboard />} />
           <Route path="tickets" element={<TechTickets />} />
           <Route path="notifications" element={<TechNotifications />} />
+          <Route path="profile" element={<UpdateProfile />} />
           <Route path="*" element={<Navigate to="dashboard" replace />} />
         </Route>
 

@@ -146,7 +146,8 @@ import {
   Ticket,
   Bell,
   LogOut,
-  UserCircle
+  UserCircle,
+  Settings
 } from "lucide-react";
 
 export default function UserLayout() {
@@ -225,6 +226,11 @@ export default function UserLayout() {
           <NavLink to="/user/notifications" className={navItemClass}>
             <Bell className="w-5 h-5" />
             <span className="font-semibold">Notifications</span>
+          </NavLink>
+
+          <NavLink to="/user/profile" className={navItemClass}>
+            <Settings className="w-5 h-5" />
+            <span className="font-semibold">Profile Settings</span>
           </NavLink>
         </nav>
 

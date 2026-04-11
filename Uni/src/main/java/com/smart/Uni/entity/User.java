@@ -70,7 +70,7 @@ public class User {
 
     private String providerId;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String password; // BCrypt hashed
 
     @Enumerated(EnumType.STRING)

@@ -167,7 +167,8 @@ import {
   Ticket,
   Bell,
   LogOut,
-  ShieldCheck
+  ShieldCheck,
+  Settings
 } from "lucide-react";
 
 export default function TechLayout() {
@@ -240,6 +241,11 @@ export default function TechLayout() {
           <NavLink to="/tech/notifications" className={navItemClass}>
             <Bell className="w-5 h-5" />
             Notifications
+          </NavLink>
+
+          <NavLink to="/tech/profile" className={navItemClass}>
+            <Settings className="w-5 h-5" />
+            Profile Settings
           </NavLink>
         </nav>
 

@@ -351,7 +351,8 @@ import {
   Bell,
   Users,
   LogOut,
-  ShieldCheck
+  ShieldCheck,
+  Settings
 } from "lucide-react";
 
 export default function AdminLayout() {
@@ -439,6 +440,11 @@ export default function AdminLayout() {
           <NavLink to="/admin/notifications" className={navItemClass}>
             <Bell className="w-5 h-5" />
             Notifications
+          </NavLink>
+
+          <NavLink to="/admin/profile" className={navItemClass}>
+            <Settings className="w-5 h-5" />
+            Profile Settings
           </NavLink>
         </nav>
 
