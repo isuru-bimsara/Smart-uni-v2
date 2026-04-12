@@ -55,6 +55,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/uploads/**").permitAll() // allow images
 
+                        .requestMatchers(HttpMethod.GET, "/api/auth/me").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/auth/me").authenticated()
+
                         // ✅ IMPORTANT FIX (allow all resource CRUD for now)
                         .requestMatchers("/api/resources/**").permitAll()
 

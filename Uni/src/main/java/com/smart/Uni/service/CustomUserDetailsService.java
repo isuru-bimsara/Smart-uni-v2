@@ -83,6 +83,10 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + email));
 
+        if (!user.isActive()) {
+            throw new UsernameNotFoundException("User is inactive: " + email);
+        }
+
         // ✅ IMPORTANT FIX: NEVER allow null password
         String password = (user.getPassword() == null) ? "" : user.getPassword();
 

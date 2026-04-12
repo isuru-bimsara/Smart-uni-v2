@@ -80,4 +80,14 @@ public class User {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean deleted = false;
+
+    private LocalDateTime deletedAt;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean active = true;
 }
