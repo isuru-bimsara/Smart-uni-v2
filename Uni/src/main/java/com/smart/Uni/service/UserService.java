@@ -1,4 +1,3 @@
-
 package com.smart.Uni.service;
 
 import com.smart.Uni.dto.request.LoginRequest;
@@ -81,13 +80,7 @@ public class UserService {
                 .build();
     }
 
-    /** NEW: list all users for admin */
-    // public List<UserResponse> getAllUsers() {
-    // return userRepository.findAll()
-    // .stream()
-    // .map(this::mapToResponse)
-    // .toList();
-    // }
+ 
 
     public List<UserResponse> getAllUsers() {
         return userRepository.findByDeletedFalse()
