@@ -63,4 +63,21 @@ api.interceptors.response.use(
   }
 );
 
+api.interceptors.response.use(
+  (res) => res,
+  (error) => {
+    const code = error?.response?.data?.code;
+    const message = error?.response?.data?.message;
+
+    if (code === "USER_BANNED") {
+      if (message) localStorage.setItem("bannedReason", message);
+      if (window.location.pathname !== "/banned") {
+        window.location.href = "/banned";
+      }
+    }
+
+    return Promise.reject(error);
+  }
+);
+
 export default api;
