@@ -43,6 +43,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 // Profile Page
 import UpdateProfile from "./pages/UpdateProfile";
 
+import BannedPage from "./pages/BannedPage";
+
 export default function App() {
   return (
     <Router>
@@ -51,6 +53,7 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/auth/callback" element={<AuthCallback />} />
+        <Route path="/banned" element={<BannedPage />} />
 
         {/* Admin Routes */}
         <Route

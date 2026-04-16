@@ -1,9 +1,14 @@
+//
+//
+//
+//
 //package com.smart.Uni.entity;
 //
 //import com.smart.Uni.enums.UserRole;
 //import jakarta.persistence.*;
 //import lombok.*;
 //import org.hibernate.annotations.CreationTimestamp;
+//
 //import java.time.LocalDateTime;
 //
 //@Entity
@@ -22,8 +27,17 @@
 //
 //    private String name;
 //    private String picture;
-//    private String provider;
+//
+//    /**
+//     * "google" for OAuth users, "local" for email/password users.
+//     */
+//    @Builder.Default
+//    private String provider = "local";
+//
 //    private String providerId;
+//
+//    @Column(nullable = true)
+//    private String password; // BCrypt hashed
 //
 //    @Enumerated(EnumType.STRING)
 //    @Column(nullable = false)
@@ -32,9 +46,17 @@
 //
 //    @CreationTimestamp
 //    private LocalDateTime createdAt;
+//
+//    @Column(nullable = false)
+//    @Builder.Default
+//    private boolean deleted = false;
+//
+//    private LocalDateTime deletedAt;
+//
+//    @Column(nullable = false)
+//    @Builder.Default
+//    private boolean active = true;
 //}
-
-
 
 package com.smart.Uni.entity;
 
@@ -62,16 +84,13 @@ public class User {
     private String name;
     private String picture;
 
-    /**
-     * "google" for OAuth users, "local" for email/password users.
-     */
     @Builder.Default
     private String provider = "local";
 
     private String providerId;
 
     @Column(nullable = true)
-    private String password; // BCrypt hashed
+    private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -81,6 +100,7 @@ public class User {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    // soft delete
     @Column(nullable = false)
     @Builder.Default
     private boolean deleted = false;
@@ -90,4 +110,12 @@ public class User {
     @Column(nullable = false)
     @Builder.Default
     private boolean active = true;
+
+    // NEW: ban
+    @Column(nullable = false)
+    @Builder.Default
+    private boolean banned = false;
+
+    private String banReason;
+    private LocalDateTime bannedAt;
 }
