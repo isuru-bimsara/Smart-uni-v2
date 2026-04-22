@@ -36,6 +36,7 @@ import TechNotifications from "./pages/tech/TechNotifications";
 import OpsDashboard from "./pages/ops/OpsDashboard";
 import OpsResources from "./pages/ops/OpsResources";
 import OpsBookings from "./pages/ops/OpsBookings";
+import OpsTickets from "./pages/ops/OpsTickets";
 import OpsNotifications from "./pages/ops/OpsNotifications";
 
 // Auth Pages
@@ -91,6 +92,7 @@ export default function App() {
           <Route path="dashboard" element={<OpsDashboard />} />
           <Route path="resources" element={<OpsResources />} />
           <Route path="bookings" element={<OpsBookings />} />
+          <Route path="tickets" element={<OpsTickets />} />
           <Route path="notifications" element={<OpsNotifications />} />
           <Route path="profile" element={<UpdateProfile />} />
           <Route path="*" element={<Navigate to="dashboard" replace />} />

@@ -16,11 +16,12 @@ import { useNotifications } from "../context/NotificationContext";
 
 
 const NAV_ITEMS = [
-  { to: "/operation-manager/dashboard",      icon: LayoutDashboard, label: "Dashboard" },
-  { to: "/operation-manager/resources",      icon: Box,             label: "Resources" },
-  { to: "/operation-manager/bookings",       icon: CalendarCheck,   label: "Bookings" },
-  { to: "/operation-manager/notifications",  icon: Bell,            label: "Notifications" },
-  { to: "/operation-manager/profile",        icon: Settings,        label: "Profile Settings" },
+  { to: "/operation-manager/dashboard", icon: LayoutDashboard, label: "Dashboard" },
+  { to: "/operation-manager/resources", icon: Box, label: "Resources" },
+  { to: "/operation-manager/bookings", icon: CalendarCheck, label: "Bookings" },
+
+  { to: "/operation-manager/notifications", icon: Bell, label: "Notifications" },
+  { to: "/operation-manager/profile", icon: Settings, label: "Profile Settings" },
 ];
 
 export default function OpsLayout() {
@@ -35,10 +36,9 @@ export default function OpsLayout() {
   };
 
   const navItemClass = ({ isActive }) =>
-    `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${
-      isActive
-        ? "bg-indigo-600 text-white shadow-md shadow-indigo-200"
-        : "text-slate-600 hover:bg-indigo-50 hover:text-indigo-600"
+    `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 ${isActive
+      ? "bg-indigo-600 text-white shadow-md shadow-indigo-200"
+      : "text-slate-600 hover:bg-indigo-50 hover:text-indigo-600"
     }`;
 
   const getPictureSrc = (picture) => {

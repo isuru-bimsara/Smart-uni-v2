@@ -11,6 +11,11 @@ public class TicketRequest {
     private String title;
     @NotBlank(message = "Description is required")
     private String description;
+    @NotBlank(message = "Contact details are required")
+    private String contactDetails;
     private TicketCategory category;
     private TicketPriority priority;
+    private Long resourceId;
+    private Long bookingId;
+    private Boolean isOther;
 }
