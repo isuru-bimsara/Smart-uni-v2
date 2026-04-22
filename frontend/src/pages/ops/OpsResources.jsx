@@ -34,7 +34,7 @@ const TYPE_LABELS = {
 };
 
 const STATUS_STYLES = {
-  AVAILABLE: "bg-emerald-100 text-emerald-700 border-emerald-200",
+  AVAILABLE: "bg-indigo-100 text-indigo-700 border-indigo-200",
   UNAVAILABLE: "bg-rose-100 text-rose-700 border-rose-200",
   MAINTENANCE: "bg-amber-100 text-amber-700 border-amber-200",
 };
@@ -162,7 +162,7 @@ export default function OpsResources() {
       {/* HEADER */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="p-3 bg-emerald-600 rounded-2xl shadow-lg shadow-emerald-200">
+          <div className="p-3 bg-indigo-600 rounded-2xl shadow-lg shadow-indigo-200">
             <Box className="text-white w-6 h-6" />
           </div>
           <div>
@@ -173,7 +173,7 @@ export default function OpsResources() {
         <button
           id="ops-add-resource-btn"
           onClick={openCreate}
-          className="flex items-center gap-2 bg-emerald-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-emerald-700 active:scale-95 transition-all shadow-lg shadow-emerald-200"
+          className="flex items-center gap-2 bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold hover:bg-indigo-700 active:scale-95 transition-all shadow-lg shadow-indigo-200"
         >
           <Plus className="w-5 h-5" /> Add Resource
         </button>
@@ -188,13 +188,13 @@ export default function OpsResources() {
             placeholder="Search resources..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-300"
+            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-300"
           />
         </div>
         <select
           value={filterType}
           onChange={(e) => setFilterType(e.target.value)}
-          className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium outline-none focus:ring-2 focus:ring-emerald-300"
+          className="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-medium outline-none focus:ring-2 focus:ring-indigo-300"
         >
           <option value="ALL">All Types</option>
           {Object.entries(TYPE_LABELS).map(([val, label]) => (
@@ -286,7 +286,7 @@ export default function OpsResources() {
                 <div className="flex gap-2 pt-2 border-t border-slate-50">
                   <button
                     onClick={() => openEdit(r)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-bold text-emerald-700 bg-emerald-50 rounded-xl hover:bg-emerald-100 transition-colors"
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2 text-xs font-bold text-indigo-700 bg-indigo-50 rounded-xl hover:bg-indigo-100 transition-colors"
                   >
                     <Pencil className="w-3.5 h-3.5" /> Edit
                   </button>
@@ -311,8 +311,8 @@ export default function OpsResources() {
             {/* Header */}
             <div className="flex items-center justify-between px-6 py-5 border-b">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-emerald-100 rounded-xl">
-                  <Layers className="w-5 h-5 text-emerald-700" />
+                <div className="p-2 bg-indigo-100 rounded-xl">
+                  <Layers className="w-5 h-5 text-indigo-700" />
                 </div>
                 <h2 className="text-lg font-black text-slate-800">
                   {form.id ? "Edit Resource" : "Add New Resource"}
@@ -346,7 +346,7 @@ export default function OpsResources() {
                   value={form.name}
                   onChange={handleChange}
                   placeholder="e.g. Lecture Hall A"
-                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-300"
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-300"
                 />
               </div>
 
@@ -360,7 +360,7 @@ export default function OpsResources() {
                   name="type"
                   value={form.type}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-300 bg-white"
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-300 bg-white"
                 >
                   <option value="">Select type…</option>
                   {Object.entries(TYPE_LABELS).map(([val, label]) => (
@@ -382,7 +382,7 @@ export default function OpsResources() {
                   value={form.capacity}
                   onChange={handleChange}
                   placeholder={isEquip ? "Number of units" : "Seating capacity"}
-                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-300"
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-300"
                 />
               </div>
 
@@ -395,7 +395,7 @@ export default function OpsResources() {
                   name="status"
                   value={form.status}
                   onChange={handleChange}
-                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-300 bg-white"
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-300 bg-white"
                 >
                   <option value="AVAILABLE">Available</option>
                   <option value="UNAVAILABLE">Unavailable</option>
@@ -417,7 +417,7 @@ export default function OpsResources() {
                       value={form.location}
                       onChange={handleChange}
                       placeholder="Building / Room"
-                      className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-300"
+                      className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-300"
                     />
                   </div>
                 </div>
@@ -434,7 +434,7 @@ export default function OpsResources() {
                   onChange={handleChange}
                   rows={3}
                   placeholder="Brief description of the resource…"
-                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-300 resize-none"
+                  className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-300 resize-none"
                 />
               </div>
 
@@ -447,7 +447,7 @@ export default function OpsResources() {
                   type="file"
                   accept="image/*"
                   onChange={(e) => setFile(e.target.files[0])}
-                  className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100 cursor-pointer"
+                  className="block w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer"
                 />
                 {(file || form.imageUrl) && (
                   <div className="mt-3 relative w-24 h-24">
@@ -479,7 +479,7 @@ export default function OpsResources() {
                 <button
                   type="submit"
                   disabled={saving}
-                  className="flex-1 py-2.5 bg-emerald-600 text-white rounded-xl text-sm font-bold hover:bg-emerald-700 disabled:bg-emerald-300 transition-colors"
+                  className="flex-1 py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-bold hover:bg-indigo-700 disabled:bg-indigo-300 transition-colors"
                 >
                   {saving ? "Saving…" : form.id ? "Update Resource" : "Create Resource"}
                 </button>

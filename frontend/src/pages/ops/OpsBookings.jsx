@@ -128,7 +128,7 @@ export default function OpsBookings() {
   if (loading)
     return (
       <div className="flex items-center justify-center h-60">
-        <Loader2 className="w-8 h-8 animate-spin text-emerald-600" />
+        <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
       </div>
     );
 
@@ -136,7 +136,7 @@ export default function OpsBookings() {
     <div className="space-y-6 pb-20">
       {/* HEADER */}
       <div className="flex items-center gap-3">
-        <div className="p-3 bg-emerald-600 rounded-2xl shadow-lg shadow-emerald-200">
+        <div className="p-3 bg-indigo-600 rounded-2xl shadow-lg shadow-indigo-200">
           <CalendarCheck className="text-white w-6 h-6" />
         </div>
         <div>
@@ -179,7 +179,7 @@ export default function OpsBookings() {
             placeholder="Search by resource or user…"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-emerald-300"
+            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm outline-none focus:ring-2 focus:ring-indigo-300"
           />
         </div>
         <div className="flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-500">
@@ -192,7 +192,7 @@ export default function OpsBookings() {
       <div className="bg-white rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="p-5 border-b flex items-center justify-between">
           <h3 className="font-bold text-slate-700 flex items-center gap-2">
-            <Clock className="w-5 h-5 text-emerald-600" />
+            <Clock className="w-5 h-5 text-indigo-600" />
             All Bookings
           </h3>
           <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">
@@ -223,7 +223,7 @@ export default function OpsBookings() {
                   <tr
                     key={b.id}
                     onClick={() => setSelectedBooking(b)}
-                    className="hover:bg-emerald-50/30 cursor-pointer transition-colors"
+                    className="hover:bg-indigo-50/30 cursor-pointer transition-colors"
                   >
                     <td className="px-6 py-4 font-bold text-slate-800">{b.resourceName}</td>
                     <td className="px-6 py-4 text-slate-600 text-sm">{b.userName}</td>
@@ -343,7 +343,7 @@ export default function OpsBookings() {
                 <button
                   onClick={() => handleAction(selectedBooking.id, "approve")}
                   disabled={!!actionLoading}
-                  className="w-full py-3 bg-emerald-600 text-white rounded-xl font-bold text-sm hover:bg-emerald-700 disabled:bg-emerald-300 transition-colors"
+                  className="w-full py-3 bg-indigo-600 text-white rounded-xl font-bold text-sm hover:bg-indigo-700 disabled:bg-indigo-300 transition-colors"
                 >
                   {actionLoading === selectedBooking.id + "approve" ? "Processing…" : "✓ Approve Booking"}
                 </button>
