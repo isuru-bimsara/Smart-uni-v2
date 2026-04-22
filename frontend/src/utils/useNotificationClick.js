@@ -37,6 +37,8 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { notificationsApi } from "../api/notifications";
 import { getNotificationTarget } from "./notificationNavigation";
+import { useNotifications } from "../context/NotificationContext";
+
 
 /**
  * Shared click handler for all roles.
@@ -44,6 +46,8 @@ import { getNotificationTarget } from "./notificationNavigation";
  */
 export default function useNotificationClick(setNotifications, role) {
   const navigate = useNavigate();
+  const { fetchUnreadCount } = useNotifications();
+
 
   return useCallback(
     (notification) => {
@@ -62,6 +66,8 @@ export default function useNotificationClick(setNotifications, role) {
                 )
               );
             }
+            fetchUnreadCount();
+
           })
           .catch((err) => {
             console.error("markAsRead failed:", err);

@@ -15,10 +15,15 @@ import {
   ShieldCheck,
   Settings,
 } from "lucide-react";
+import { useNotifications } from "../context/NotificationContext";
+import { Link } from "react-router-dom";
+
 
 export default function TechLayout() {
   const navigate = useNavigate();
   const { user, setUser } = useAuth();
+  const { unreadCount } = useNotifications();
+
 
   // ✅ GET LOGGED-IN USER
   useEffect(() => {
@@ -81,9 +86,17 @@ export default function TechLayout() {
           </NavLink>
 
           <NavLink to="/tech/notifications" className={navItemClass}>
-            <Bell className="w-5 h-5" />
+            <div className="relative">
+              <Bell className="w-5 h-5" />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 bg-rose-500 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center border-2 border-white animate-pulse">
+                  {unreadCount > 9 ? "9+" : unreadCount}
+                </span>
+              )}
+            </div>
             Notifications
           </NavLink>
+
 
           <NavLink to="/tech/profile" className={navItemClass}>
             <Settings className="w-5 h-5" />
@@ -144,9 +157,18 @@ export default function TechLayout() {
             </span>
           </h1>
 
-          <button className="relative p-2 text-slate-400 hover:text-indigo-600">
+          <Link
+            to="/tech/notifications"
+            className="relative p-2 text-slate-400 hover:text-indigo-600 transition-colors"
+          >
             <Bell className="w-6 h-6" />
-          </button>
+            {unreadCount > 0 && (
+              <span className="absolute top-1.5 right-1.5 bg-rose-500 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center border-2 border-white animate-pulse">
+                {unreadCount > 9 ? "9+" : unreadCount}
+              </span>
+            )}
+          </Link>
+
         </header>
 
         {/* CONTENT */}
