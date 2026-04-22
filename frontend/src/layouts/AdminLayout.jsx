@@ -14,6 +14,8 @@ import {
   ShieldCheck,
   Settings,
 } from "lucide-react";
+import { useNotifications } from "../context/NotificationContext";
+
 
 const NAV_ITEMS = [
   { to: "/admin/dashboard",     icon: LayoutDashboard, label: "Dashboard" },
@@ -28,6 +30,8 @@ const NAV_ITEMS = [
 export default function AdminLayout() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
+  const { unreadCount } = useNotifications();
+
 
   const handleLogout = () => {
     logout();
@@ -69,10 +73,18 @@ export default function AdminLayout() {
 
           {NAV_ITEMS.map(({ to, icon: Icon, label }) => (
             <NavLink key={to} to={to} className={navItemClass} id={`admin-nav-${label.toLowerCase().replace(/\s+/g, "-")}`}>
-              <Icon className="w-5 h-5 flex-shrink-0" />
+              <div className="relative">
+                <Icon className="w-5 h-5 flex-shrink-0" />
+                {label === "Notifications" && unreadCount > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 bg-rose-500 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center border-2 border-white animate-pulse">
+                    {unreadCount > 9 ? "9+" : unreadCount}
+                  </span>
+                )}
+              </div>
               {label}
             </NavLink>
           ))}
+
         </nav>
 
         {/* PROFILE + LOGOUT */}
@@ -124,7 +136,13 @@ export default function AdminLayout() {
             className="relative p-2 text-slate-400 hover:text-indigo-600 transition-colors"
           >
             <Bell className="w-6 h-6" />
+            {unreadCount > 0 && (
+              <span className="absolute top-1.5 right-1.5 bg-rose-500 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center border-2 border-white animate-pulse">
+                {unreadCount > 9 ? "9+" : unreadCount}
+              </span>
+            )}
           </NavLink>
+
         </header>
 
         {/* CONTENT */}

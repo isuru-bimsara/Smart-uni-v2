@@ -172,10 +172,14 @@ import {
   Bell, CheckCheck, AlertCircle, Info, UserPlus, Settings, Clock, Trash2
 } from "lucide-react";
 import useNotificationClick from "../../utils/useNotificationClick";
+import { useNotifications } from "../../context/NotificationContext";
+
 
 export default function AdminNotifications() {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { fetchUnreadCount } = useNotifications();
+
 
   const handleNotificationClick = useNotificationClick(setNotifications, "ADMIN");
 
@@ -203,7 +207,9 @@ export default function AdminNotifications() {
         const updated = prev.map((n) => ({ ...n, read: true }));
         return sortNotifications(updated);
       });
+      fetchUnreadCount();
     } catch (err) {
+
       console.error("Failed to mark all as read");
     }
   };
@@ -214,7 +220,9 @@ export default function AdminNotifications() {
     try {
       await notificationsApi.delete(id);
       setNotifications((prev) => prev.filter((n) => n.id !== id));
+      fetchUnreadCount();
     } catch (err) {
+
       console.error("Failed to delete notification");
     }
   };
@@ -225,7 +233,9 @@ export default function AdminNotifications() {
     try {
       await notificationsApi.deleteAll();
       setNotifications([]);
+      fetchUnreadCount();
     } catch (err) {
+
       console.error("Failed to delete all notifications");
     }
   };

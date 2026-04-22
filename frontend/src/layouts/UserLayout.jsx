@@ -14,10 +14,15 @@ import {
   UserCircle,
   Settings,
 } from "lucide-react";
+import { useNotifications } from "../context/NotificationContext";
+import { Link } from "react-router-dom";
+
 
 export default function UserLayout() {
   const navigate = useNavigate();
- const { user, logout } = useAuth();
+  const { user, logout } = useAuth();
+  const { unreadCount } = useNotifications();
+
 
   // Fetch logged-in user once
   useEffect(() => {
@@ -89,9 +94,17 @@ export default function UserLayout() {
           </NavLink>
 
           <NavLink to="/user/notifications" className={navItemClass}>
-            <Bell className="w-5 h-5" />
+            <div className="relative">
+              <Bell className="w-5 h-5" />
+              {unreadCount > 0 && (
+                <span className="absolute -top-1.5 -right-1.5 bg-rose-500 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center border-2 border-white animate-pulse">
+                  {unreadCount > 9 ? "9+" : unreadCount}
+                </span>
+              )}
+            </div>
             <span className="font-semibold">Notifications</span>
           </NavLink>
+
 
           <NavLink to="/user/profile" className={navItemClass}>
             <Settings className="w-5 h-5" />
@@ -145,9 +158,18 @@ export default function UserLayout() {
               {user?.name || "User"}
             </span>
           </h1>
-          <button className="relative p-2 text-slate-400 hover:text-indigo-600">
+          <Link
+            to="/user/notifications"
+            className="relative p-2 text-slate-400 hover:text-indigo-600 transition-colors"
+          >
             <Bell className="w-6 h-6" />
-          </button>
+            {unreadCount > 0 && (
+              <span className="absolute top-1.5 right-1.5 bg-rose-500 text-white text-[10px] font-bold h-4 w-4 rounded-full flex items-center justify-center border-2 border-white animate-pulse">
+                {unreadCount > 9 ? "9+" : unreadCount}
+              </span>
+            )}
+          </Link>
+
         </header>
 
         {/* CONTENT */}

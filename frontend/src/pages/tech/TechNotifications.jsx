@@ -167,6 +167,8 @@ import {
   Trash2,
 } from "lucide-react";
 import useNotificationClick from "../../utils/useNotificationClick";
+import { useNotifications } from "../../context/NotificationContext";
+
 
 const POLL_MS = 10000;
 
@@ -174,6 +176,8 @@ export default function TechNotifications() {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const pollRef = useRef(null);
+  const { fetchUnreadCount } = useNotifications();
+
 
   const handleNotificationClick = useNotificationClick(setNotifications, "TECHNICIAN");
 
@@ -204,7 +208,9 @@ export default function TechNotifications() {
     try {
       await notificationsApi.markAllAsRead();
       setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+      fetchUnreadCount();
     } catch (e) {
+
       console.error(e);
     }
   };
@@ -215,7 +221,9 @@ export default function TechNotifications() {
     try {
       await notificationsApi.delete(id);
       setNotifications((prev) => prev.filter((n) => n.id !== id));
+      fetchUnreadCount();
     } catch (e) {
+
       console.error(e);
     }
   };
@@ -226,7 +234,9 @@ export default function TechNotifications() {
     try {
       await notificationsApi.deleteAll();
       setNotifications([]);
+      fetchUnreadCount();
     } catch (e) {
+
       console.error(e);
     }
   };

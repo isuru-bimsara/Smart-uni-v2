@@ -14,11 +14,15 @@ import {
   Inbox,
   Trash2,
 } from "lucide-react";
+import { useNotifications } from "../../context/NotificationContext";
+
 
 export default function OpsNotifications() {
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState("ALL"); // ALL | UNREAD | READ
+  const { fetchUnreadCount } = useNotifications();
+
 
   const sortNotifications = useCallback((data) => {
     return [...data].sort((a, b) => {
@@ -48,7 +52,9 @@ export default function OpsNotifications() {
         );
         return sortNotifications(updated);
       });
+      fetchUnreadCount();
     } catch {
+
       // silent
     }
   };
@@ -60,7 +66,9 @@ export default function OpsNotifications() {
         const updated = prev.map((n) => ({ ...n, read: true }));
         return sortNotifications(updated);
       });
+      fetchUnreadCount();
     } catch {
+
       console.error("Failed to mark all as read");
     }
   };
@@ -71,7 +79,9 @@ export default function OpsNotifications() {
     try {
       await notificationsApi.delete(id);
       setNotifications((prev) => prev.filter((n) => n.id !== id));
+      fetchUnreadCount();
     } catch {
+
       console.error("Failed to delete notification");
     }
   };
@@ -82,7 +92,9 @@ export default function OpsNotifications() {
     try {
       await notificationsApi.deleteAll();
       setNotifications([]);
+      fetchUnreadCount();
     } catch {
+
       console.error("Failed to delete all notifications");
     }
   };
