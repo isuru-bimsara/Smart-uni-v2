@@ -38,7 +38,7 @@ public class BookingController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('OPERATION_MANAGER')")
+    @PreAuthorize("hasAnyRole('OPERATION_MANAGER', 'ADMIN')")
     public ResponseEntity<ApiResponse<List<BookingResponse>>> getAllBookings() {
         return ResponseEntity.ok(ApiResponse.success(bookingService.getAllBookings()));
     }

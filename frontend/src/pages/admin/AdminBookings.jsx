@@ -22,24 +22,26 @@ export default function AdminBookings() {
 
 
   // Fetch bookings
-  const fetchBookings = async () => {
-    try {
-      const res = await bookingsApi.getAll();
-      const updated = res.data.data.map((b) => {
-        const now = new Date();
-        if (new Date(b.endTime) < now && b.status === "PENDING") {
-          b.status = "CANCELLED";
-          b.autoCancelled = true;
-        }
-        return b;
-      });
-      setBookings(updated);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+ const fetchBookings = async () => {
+  try {
+    const res = await bookingsApi.getAll();
+
+    const updated = res.data.data.map((b) => {  // ✅ FIXED
+      const now = new Date();
+      if (new Date(b.endTime) < now && b.status === "PENDING") {
+        b.status = "CANCELLED";
+        b.autoCancelled = true;
+      }
+      return b;
+    });
+
+    setBookings(updated);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    setLoading(false);
+  }
+};
 
   useEffect(() => {
     fetchBookings();
@@ -56,24 +58,7 @@ export default function AdminBookings() {
     }
   }, [searchParams, bookings]);
 
-  // Handle booking actions
-  const handleStatusChange = async (id, action) => {
-    try {
-      let res;
-      if (action === "approve") res = await bookingsApi.approve(id);
-      if (action === "reject") res = await bookingsApi.reject(id);
-      if (action === "cancel") res = await bookingsApi.cancel(id);
-
-      setBookings((prev) =>
-        prev.map((b) => (b.id === id ? res.data.data : b))
-      );
-
-      // Update panel if open
-      setSelectedBooking(res.data.data);
-    } catch {
-      alert("Failed to update status");
-    }
-  };
+  // Handle booking actions removed as Admin should only view
 
   // Status style mapping
   const getStatusStyle = (status) => {
@@ -141,7 +126,6 @@ export default function AdminBookings() {
                   <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">User</th>
                   <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Time</th>
                   <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase text-center">Status</th>
-                  <th className="px-6 py-4 text-xs font-bold text-slate-400 uppercase">Actions</th>
                 </tr>
               </thead>
 
@@ -164,39 +148,6 @@ export default function AdminBookings() {
                       <span className={`px-3 py-1 rounded-full text-xs border ${getStatusStyle(b.status)}`}>
                         {b.status} {b.autoCancelled && "(auto)"}
                       </span>
-                    </td>
-                    <td className="px-6 py-5 space-x-2">
-                      {b.status === "PENDING" && (
-                        <>
-                          <button
-                            onClick={(e) => { e.stopPropagation(); handleStatusChange(b.id, "approve"); }}
-                            className="text-blue-600 text-xs font-semibold"
-                          >
-                            Approve
-                          </button>
-                          <button
-                            onClick={(e) => { e.stopPropagation(); handleStatusChange(b.id, "reject"); }}
-                            className="text-rose-600 text-xs font-semibold"
-                          >
-                            Reject
-                          </button>
-                          <button
-                            onClick={(e) => { e.stopPropagation(); handleStatusChange(b.id, "cancel"); }}
-                            className="text-orange-600 text-xs font-semibold"
-                          >
-                            Cancel
-                          </button>
-                        </>
-                      )}
-
-                      {b.status === "APPROVED" && (
-                        <button
-                          onClick={(e) => { e.stopPropagation(); handleStatusChange(b.id, "cancel"); }}
-                          className="text-orange-600 text-xs font-semibold"
-                        >
-                          Cancel
-                        </button>
-                      )}
                     </td>
                   </tr>
                 ))}
@@ -256,42 +207,6 @@ export default function AdminBookings() {
               <p>{new Date(selectedBooking.createdAt).toLocaleString()}</p>
             </div>
 
-            {/* ACTIONS */}
-            <div className="pt-4 space-y-2">
-              {selectedBooking.status === "PENDING" && (
-                <>
-                  <button
-                    onClick={() => handleStatusChange(selectedBooking.id, "approve")}
-                    className="w-full bg-blue-600 text-white py-2 rounded"
-                  >
-                    Approve
-                  </button>
-
-                  <button
-                    onClick={() => handleStatusChange(selectedBooking.id, "reject")}
-                    className="w-full bg-red-600 text-white py-2 rounded"
-                  >
-                    Reject
-                  </button>
-
-                  <button
-                    onClick={() => handleStatusChange(selectedBooking.id, "cancel")}
-                    className="w-full bg-orange-500 text-white py-2 rounded"
-                  >
-                    Cancel
-                  </button>
-                </>
-              )}
-
-              {selectedBooking.status === "APPROVED" && (
-                <button
-                  onClick={() => handleStatusChange(selectedBooking.id, "cancel")}
-                  className="w-full bg-orange-500 text-white py-2 rounded"
-                >
-                  Cancel
-                </button>
-              )}
-            </div>
           </div>
         </div>
       )}

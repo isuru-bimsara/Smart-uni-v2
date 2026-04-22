@@ -15,7 +15,6 @@ import OpsLayout from "./layouts/OpsLayout";
 // Admin Pages
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminBookings from "./pages/admin/AdminBookings";
-import AdminResources from "./pages/admin/AdminResources";
 import AdminTickets from "./pages/admin/AdminTickets";
 import AdminNotifications from "./pages/admin/AdminNotifications";
 import AdminUsers from "./pages/admin/AdminUsers";
@@ -73,7 +72,6 @@ export default function App() {
         >
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="bookings" element={<AdminBookings />} />
-          <Route path="resources" element={<AdminResources />} />
           <Route path="users" element={<AdminUsers />} />
           <Route path="tickets" element={<AdminTickets />} />
           <Route path="notifications" element={<AdminNotifications />} />

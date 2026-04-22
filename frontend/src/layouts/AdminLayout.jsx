@@ -20,7 +20,6 @@ import { useNotifications } from "../context/NotificationContext";
 const NAV_ITEMS = [
   { to: "/admin/dashboard",     icon: LayoutDashboard, label: "Dashboard" },
   { to: "/admin/bookings",      icon: CalendarCheck,   label: "Bookings" },
-  { to: "/admin/resources",     icon: Box,             label: "Resources" },
   { to: "/admin/tickets",       icon: Ticket,          label: "Tickets" },
   { to: "/admin/users",         icon: Users,           label: "Users" },
   { to: "/admin/notifications", icon: Bell,            label: "Notifications" },
