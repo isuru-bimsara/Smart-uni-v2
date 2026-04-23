@@ -547,7 +547,9 @@
 import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { bookingsApi } from "../../api/bookings";
-import { format, isToday, isTomorrow } from "date-fns";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { format, isToday, isTomorrow, isSameDay, endOfDay } from "date-fns";
 import {
   CalendarDays,
   Clock,
@@ -563,7 +565,11 @@ import {
   MessageSquare,
   ArrowRight,
   Info,
-  ArrowUpDown, // New icon for sorting
+  ArrowUpDown,
+  Edit2,
+  Save,
+  RotateCcw,
+  AlertTriangle
 } from "lucide-react";
 
 const STATUS_MAP = {
@@ -598,7 +604,58 @@ export default function UserBookings() {
   const [loading, setLoading] = useState(true);
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [sortBy, setSortBy] = useState("NEWEST"); // NEWEST, OLDEST, NAME
+  const [isEditing, setIsEditing] = useState(false);
+  const [editData, setEditData] = useState({
+    startTime: null,
+    endTime: null,
+    purpose: ""
+  });
+  const [updateError, setUpdateError] = useState("");
+  const [updating, setUpdating] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
+
+  const handleEditInit = () => {
+    setEditData({
+      startTime: new Date(selectedBooking.startTime),
+      endTime: new Date(selectedBooking.endTime),
+      purpose: selectedBooking.purpose || ""
+    });
+    setUpdateError("");
+    setIsEditing(true);
+  };
+
+  const handleUpdate = async () => {
+    setUpdateError("");
+    if (!editData.startTime || !editData.endTime || !editData.purpose) {
+      setUpdateError("All fields are required.");
+      return;
+    }
+    if (editData.endTime <= editData.startTime) {
+      setUpdateError("End time must be after start time.");
+      return;
+    }
+
+    try {
+      setUpdating(true);
+      const formatTime = (d) => format(d, "yyyy-MM-dd'T'HH:mm:ss");
+      const res = await bookingsApi.update(selectedBooking.id, {
+        resourceId: selectedBooking.resourceId,
+        startTime: formatTime(editData.startTime),
+        endTime: formatTime(editData.endTime),
+        purpose: editData.purpose
+      });
+
+      // Update local state
+      setBookings(prev => prev.map(b => b.id === selectedBooking.id ? res.data.data : b));
+      setSelectedBooking(res.data.data);
+      setIsEditing(false);
+      alert("✅ Booking updated successfully!");
+    } catch (err) {
+      setUpdateError(err.response?.data?.message || "Failed to update booking.");
+    } finally {
+      setUpdating(false);
+    }
+  };
 
   const bookingIdFromQuery = searchParams.get("bookingId");
 
@@ -783,12 +840,12 @@ export default function UserBookings() {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div 
             className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm animate-in fade-in duration-300" 
-            onClick={() => setSelectedBooking(null)} 
+            onClick={() => { setSelectedBooking(null); setIsEditing(false); }} 
           />
           <div className="relative bg-white w-full max-w-xl rounded-[3rem] shadow-2xl overflow-hidden animate-in zoom-in-95 duration-200">
             <div className={`px-10 py-12 ${STATUS_MAP[selectedBooking.status]?.banner || "bg-indigo-600"} text-white relative`}>
               <button 
-                onClick={() => setSelectedBooking(null)}
+                onClick={() => { setSelectedBooking(null); setIsEditing(false); }}
                 className="absolute top-6 right-6 p-2 bg-white/20 hover:bg-white/30 rounded-full transition-colors"
               >
                 <X className="w-5 h-5" />
@@ -803,49 +860,135 @@ export default function UserBookings() {
                 </div>
               </div>
             </div>
-            <div className="p-10 space-y-8 bg-slate-50/50">
-              <div className="grid grid-cols-2 gap-8">
-                <DetailItem 
-                  icon={<Calendar className="w-4 h-4" />} 
-                  label="Start Schedule" 
-                  value={format(new Date(selectedBooking.startTime), "EEEE, MMM dd, yyyy")}
-                  subValue={format(new Date(selectedBooking.startTime), "hh:mm a")}
-                />
-                <DetailItem 
-                  icon={<Clock className="w-4 h-4" />} 
-                  label="End Schedule" 
-                  value={format(new Date(selectedBooking.endTime), "EEEE, MMM dd, yyyy")}
-                  subValue={format(new Date(selectedBooking.endTime), "hh:mm a")}
-                />
-              </div>
-              <div className="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3">
-                <div className="flex items-center gap-2 text-indigo-600">
-                  <MessageSquare className="w-4 h-4" />
-                  <span className="text-[10px] font-black uppercase tracking-widest">Purpose of Booking</span>
-                </div>
-                <p className="text-sm text-slate-600 italic leading-relaxed px-1">
-                  "{selectedBooking.purpose || "No specific details provided."}"
-                </p>
-              </div>
-              {selectedBooking.status === "REJECTED" && (
-                <div className="p-6 bg-rose-50 border border-rose-100 rounded-3xl flex gap-4">
-                  <div className="p-2 bg-rose-100 rounded-xl h-fit">
-                    <Info className="w-5 h-5 text-rose-600" />
+
+            {isEditing ? (
+              <div className="p-10 space-y-6 bg-slate-50/50">
+                {updateError && (
+                  <div className="bg-rose-50 border border-rose-100 text-rose-600 p-4 rounded-xl text-sm font-bold flex items-center gap-3 animate-shake">
+                    <AlertTriangle className="w-5 h-5" />
+                    {updateError}
+                  </div>
+                )}
+
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                      <Clock className="w-3.5 h-3.5 text-emerald-500" /> Start Time
+                    </label>
+                    <DatePicker
+                      selected={editData.startTime}
+                      onChange={(date) => setEditData({ ...editData, startTime: date })}
+                      showTimeSelect
+                      timeIntervals={30}
+                      dateFormat="MMMM d, yyyy h:mm aa"
+                      className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all font-bold text-slate-700 text-sm"
+                    />
                   </div>
                   <div>
-                    <p className="text-[10px] font-black text-rose-600 uppercase tracking-widest mb-1">Admin Feedback</p>
-                    <p className="text-sm text-rose-800 font-bold">{selectedBooking.rejectReason || "No explanation provided by admin."}</p>
+                    <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                      <Clock className="w-3.5 h-3.5 text-rose-500" /> End Time
+                    </label>
+                    <DatePicker
+                      selected={editData.endTime}
+                      onChange={(date) => setEditData({ ...editData, endTime: date })}
+                      showTimeSelect
+                      timeIntervals={30}
+                      dateFormat="MMMM d, yyyy h:mm aa"
+                      minTime={editData.startTime}
+                      maxTime={editData.startTime ? endOfDay(editData.startTime) : null}
+                      className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all font-bold text-slate-700 text-sm"
+                    />
                   </div>
                 </div>
-              )}
-            </div>
+
+                <div>
+                  <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                    <MessageSquare className="w-3.5 h-3.5 text-indigo-500" /> Purpose
+                  </label>
+                  <textarea
+                    value={editData.purpose}
+                    onChange={(e) => setEditData({ ...editData, purpose: e.target.value })}
+                    rows={3}
+                    className="w-full px-4 py-3 bg-white border border-slate-200 rounded-xl focus:ring-2 focus:ring-indigo-500 outline-none transition-all resize-none text-sm"
+                    placeholder="Enter booking purpose..."
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="p-10 space-y-8 bg-slate-50/50">
+                <div className="grid grid-cols-2 gap-8">
+                  <DetailItem 
+                    icon={<Calendar className="w-4 h-4" />} 
+                    label="Start Schedule" 
+                    value={format(new Date(selectedBooking.startTime), "EEEE, MMM dd, yyyy")}
+                    subValue={format(new Date(selectedBooking.startTime), "hh:mm a")}
+                  />
+                  <DetailItem 
+                    icon={<Clock className="w-4 h-4" />} 
+                    label="End Schedule" 
+                    value={format(new Date(selectedBooking.endTime), "EEEE, MMM dd, yyyy")}
+                    subValue={format(new Date(selectedBooking.endTime), "hh:mm a")}
+                  />
+                </div>
+                <div className="p-6 bg-white rounded-3xl border border-slate-200 shadow-sm space-y-3">
+                  <div className="flex items-center gap-2 text-indigo-600">
+                    <MessageSquare className="w-4 h-4" />
+                    <span className="text-[10px] font-black uppercase tracking-widest">Purpose of Booking</span>
+                  </div>
+                  <p className="text-sm text-slate-600 italic leading-relaxed px-1">
+                    "{selectedBooking.purpose || "No specific details provided."}"
+                  </p>
+                </div>
+                {selectedBooking.status === "REJECTED" && (
+                  <div className="p-6 bg-rose-50 border border-rose-100 rounded-3xl flex gap-4">
+                    <div className="p-2 bg-rose-100 rounded-xl h-fit">
+                      <Info className="w-5 h-5 text-rose-600" />
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-black text-rose-600 uppercase tracking-widest mb-1">Admin Feedback</p>
+                      <p className="text-sm text-rose-800 font-bold">{selectedBooking.rejectReason || "No explanation provided by admin."}</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             <div className="p-8 border-t border-slate-100 flex gap-4 bg-white">
-               <button 
-                onClick={() => setSelectedBooking(null)}
-                className="w-full py-4 bg-indigo-50 text-indigo-600 rounded-2xl font-black text-sm hover:bg-indigo-100 transition-all active:scale-95"
-              >
-                DISMISS DETAILS
-              </button>
+              {isEditing ? (
+                <>
+                  <button 
+                    onClick={() => setIsEditing(false)}
+                    className="flex-1 py-4 bg-slate-100 text-slate-600 rounded-2xl font-black text-sm hover:bg-slate-200 transition-all active:scale-95 flex items-center justify-center gap-2"
+                  >
+                    <RotateCcw className="w-4 h-4" /> CANCEL
+                  </button>
+                  <button 
+                    onClick={handleUpdate}
+                    disabled={updating}
+                    className="flex-[2] py-4 bg-indigo-600 text-white rounded-2xl font-black text-sm hover:bg-indigo-700 transition-all active:scale-95 shadow-lg shadow-indigo-100 flex items-center justify-center gap-2 disabled:opacity-50"
+                  >
+                    {updating ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
+                    {updating ? "UPDATING..." : "SAVE CHANGES"}
+                  </button>
+                </>
+              ) : (
+                <>
+                  {selectedBooking.status === "PENDING" && (
+                    <button 
+                      onClick={handleEditInit}
+                      className="flex-1 py-4 bg-amber-50 text-amber-600 rounded-2xl font-black text-sm hover:bg-amber-100 transition-all active:scale-95 flex items-center justify-center gap-2"
+                    >
+                      <Edit2 className="w-4 h-4" /> EDIT BOOKING
+                    </button>
+                  )}
+                  <button 
+                    onClick={() => setSelectedBooking(null)}
+                    className={`${selectedBooking.status === "PENDING" ? "flex-1" : "w-full"} py-4 bg-indigo-50 text-indigo-600 rounded-2xl font-black text-sm hover:bg-indigo-100 transition-all active:scale-95`}
+                  >
+                    DISMISS
+                  </button>
+                </>
+              )}
             </div>
           </div>
         </div>
